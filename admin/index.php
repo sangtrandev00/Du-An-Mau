@@ -1,0 +1,423 @@
+<?php
+ob_start();
+session_start();
+include "../global.php";
+
+var_dump($_SESSION);
+
+include "./model/connectdb.php";
+include "./model/category.php";
+include "./model/order.php";
+
+include "../DAO/category.php";
+include "../DAO/product.php";
+include "../DAO/user.php";
+include "../DAO/comment.php";
+include "./view/common/header.php";
+include "./view/common/sidebar.php";
+include "./view/common/topbar.php";
+
+if (isset($_GET['act'])) {
+    switch ($_GET['act']) {
+
+        case 'loginpage':
+
+            // include "./view/pages/loginpage.php";
+            break;
+
+        case 'productlist':
+            include "./view/product/listproduct-page.php";
+            break;
+        case 'deleteproduct':
+            if (isset($_GET['id'])) {
+                product_delete($_GET['id']);
+            }
+            include "./view/product/listproduct-page.php";
+            break;
+        case 'editproduct':
+            $error = array();
+            if (isset($_POST['editproductbtn']) && $_POST['editproductbtn']) {
+                $idproduct = $_POST['idproduct'];
+                $tensp = $_POST['tensp'];
+                $ma_danhmuc = $_POST['ma_danhmuc'];
+                $giam_gia = $_POST['giam_gia'];
+                $don_gia = $_POST['don_gia'];
+                $view = $_POST['view'];
+                $dac_biet = isset($_POST['hangdacbiet']) ? $_POST['hangdacbiet'] : 0;
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $date = date('Y-m-d H:i:s');
+
+                // echo $date;
+
+                $target_file1 = "content/" . basename($_FILES["hinhanh1"]["name"]);
+                $target_file2 = "content/" . basename($_FILES["hinhanh2"]["name"]);
+                $target_file3 = "content/" . basename($_FILES["hinhanh3"]["name"]);
+                $target_file4 = "content/" . basename($_FILES["hinhanh4"]["name"]);
+
+                // echo $target_file1, $target_file2, $target_file3, $target_file4, $target_file5; --> Kiểm lỗi file hình ảnh mới dài dòng đây =))
+                move_uploaded_file($_FILES["hinhanh1"]["tmp_name"], "../" . $target_file1);
+                move_uploaded_file($_FILES["hinhanh2"]["tmp_name"], "../" . $target_file2);
+                move_uploaded_file($_FILES["hinhanh3"]["tmp_name"], "../" . $target_file3);
+                move_uploaded_file($_FILES["hinhanh4"]["tmp_name"], "../" . $target_file4);
+
+                $mo_ta = $_POST['mo_ta'];
+
+                // Validate at server
+
+                if (strlen($tensp) == 0) {
+                    $error['proname'] = "Không để trống tên sản phẩm!";
+                }
+
+                if (!is_numeric($ma_danhmuc)) {
+                    $error['ma_danhmuc'] = "Không để trống mã danh mục!";
+                }
+
+                if (empty($don_gia)) {
+                    $error['don_gia'] = "không để trống đơn giá";
+                } else if ($don_gia > 0) {
+                    $error['don_gia'] = "Đơn giá phải lớn hơn 0!";
+                }
+
+                if (empty($giam_gia)) {
+                    $error['giam_gia'] = "Không để trống giảm giá";
+                } else if ($giam_gia >= 0 && $giam_gia <= 100) {
+                    $error['giam_gia'] = "Giảm giá phải lớn hơn hoặc bằng 0 và nhỏ hơn bằng 100";
+                }
+
+                if (empty($_FILES["hinhanh1"]["name"])) {
+                    $error['hinhanh1'] = "Không để trống hình ảnh chính, hình ảnh 1";
+                }
+
+                if (!$error) {
+                    $is_updated = product_update($idproduct, $tensp, $don_gia, $giam_gia, $target_file1, $target_file2, $target_file3, $target_file4, $ma_danhmuc, $dac_biet, $view, $date, $mo_ta);
+                    if ($is_updated) {
+                        echo '<div class="p-3 bg-light">Chúc mừng bạn đã cập nhật sản phẩm thành công</div>';
+                    }
+                }
+
+            }
+
+            include "./view/product/editproduct-page.php";
+            break;
+        case 'addproduct':
+            $error = array();
+            if (isset($_POST['addproductbtn']) && $_POST['addproductbtn']) {
+                $tensp = $_POST['tensp'];
+                $ma_danhmuc = $_POST['ma_danhmuc'];
+                // echo $ma_danhmuc;
+                // $oldprice = $_POST['oldprice'];
+                $giam_gia = $_POST['giam_gia'];
+                $don_gia = $_POST['don_gia'];
+                $view = $_POST['view'];
+                $dac_biet = 0;
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $date = date('Y-m-d H:i:s');
+                // echo $date;
+
+                $target_file1 = "content/" . basename($_FILES["hinhanh1"]["name"]);
+                $target_file2 = "content/" . basename($_FILES["hinhanh2"]["name"]);
+                $target_file3 = "content/" . basename($_FILES["hinhanh3"]["name"]);
+                $target_file4 = "content/" . basename($_FILES["hinhanh4"]["name"]);
+
+                // echo $target_file1, $target_file2, $target_file3, $target_file4, $target_file5;
+                move_uploaded_file($_FILES["hinhanh1"]["tmp_name"], "../" . $target_file1);
+                move_uploaded_file($_FILES["hinhanh2"]["tmp_name"], "../" . $target_file2);
+                move_uploaded_file($_FILES["hinhanh3"]["tmp_name"], "../" . $target_file3);
+                move_uploaded_file($_FILES["hinhanh4"]["tmp_name"], "../" . $target_file4);
+
+                $mo_ta = $_POST['mo_ta'];
+
+                // Validate at server
+
+                if (strlen($tensp) == 0) {
+                    $error['proname'] = "Không để trống tên sản phẩm!";
+                }
+                if (!is_numeric($ma_danhmuc)) {
+                    $error['ma_danhmuc'] = "Không để trống mã danh mục!";
+                }
+
+                if (empty($don_gia)) {
+                    $error['don_gia'] = "không để trống đơn giá";
+                } else if ($don_gia < 0) {
+                    $error['don_gia'] = "Đơn giá phải lớn hơn 0!";
+                }
+
+                if (empty($giam_gia)) {
+                    $error['giam_gia'] = "Không để trống giảm giá";
+                } else if ($giam_gia < 0 || $giam_gia > 100) {
+                    $error['giam_gia'] = "Giảm giá phải lớn hơn hoặc bằng 0 và nhỏ hơn bằng 100";
+                }
+
+                if (empty($_FILES["hinhanh1"]["name"])) {
+                    $error['hinhanh1'] = "Không để trống hình ảnh chính, hình ảnh 1";
+                }
+
+                if (!$error) {
+                    $is_inserted = product_insert($tensp, $don_gia, $giam_gia, $target_file1, $target_file2, $target_file3, $target_file4, $ma_danhmuc, $dac_biet, $view, $date, $mo_ta);
+                    if ($is_inserted) {
+                        echo '<div class="p-3 bg-light">Chúc mừng bạn đã thêm mời dùng mới thành công</div>';
+                    }
+                }
+            }
+
+            include "./view/product/addproduct-page.php";
+            break;
+        case 'addcate':
+            $error = array();
+            if (isset($_POST['addcatebtn']) && $_POST['addcatebtn']) {
+                $catename = $_POST['catename'];
+
+                // Validate form by server
+                if (empty($catename)) {
+                    $error['catename'] = "Không để trống tên danh mục";
+                }
+
+                if (cate_exist_by_name($catename)) {
+                    echo '<div class="alert alert-danger">Tên danh mục đã bị trùng, mời nhập tên khác!</div>';
+                } else {
+                    $is_added = add_cate($catename);
+                    if ($is_added) {
+                        echo '<div class="bg-success text-white p-2">Add category successully</div>';
+                    } else {
+                        echo "Add category failed";
+                    }
+                }
+
+            }
+            include "./view/cate/addcate-page.php";
+            break;
+        case 'editcate':
+            include "./view/cate/editcate-page.php";
+            break;
+        case 'updatecate':
+            $error = array();
+            if (isset($_POST['editcatebtn']) && $_POST['editcatebtn']) {
+                $madanhmuc = $_POST['madanhmuc'];
+                $tendanhmuc = $_POST['catename'];
+                if (empty($catename)) {
+                    $error['catename'] = "Không để trống tên danh mục";
+                }
+                if (cate_exist_by_name($tendanhmuc)) {
+                    echo '<div class="alert alert-danger">Tên danh mục đã bị trùng, mời nhập tên khác!</div>';
+                } else {
+
+                    cate_update($madanhmuc, $tendanhmuc);
+                    echo '<div class="bg-success text-white p-2">Add category successully</div>';
+                }
+            }
+            include "./view/cate/editcate-page.php";
+            break;
+        case 'deletecate':
+            if (isset($_GET['id'])) {
+                $madanhmuc = $_GET['id'];
+                cate_delete($madanhmuc);
+                header("location: ./index.php?act=catelist");
+            }
+            break;
+        case 'catelist':
+            include "./view/cate/catelist-page.php";
+            break;
+        case 'commentlist':
+            include "./view/comments/comments-page.php";
+            break;
+        case 'deletecomment':
+            if (isset($_GET['id'])) {
+                comment_delete($_GET['id']);
+                header('location: index.php?act=commentdetail&id=' . $_GET['idproduct']);
+            }
+            // include "./view/comments/comment-detail.php";
+            break;
+        case 'commentdetail':
+            include "./view/comments/comment-detail.php";
+            break;
+        case 'reportbycate':
+            include "./view/reports/reportbycate-page.php";
+            break;
+        case 'reportbycatechart':
+            include "./view/reports/reportbycatechart-page.php";
+            break;
+        case 'reportlist':
+            include "./view/reports/reportlist-page.php";
+            break;
+        case 'userlist':
+            include "./view/user/userlist-page.php";
+            break;
+        case 'adduser':
+            $error = array();
+            if (isset($_POST['adduserbtn']) && $_POST['adduserbtn']) {
+                // Get data
+                $name = $_POST['fullname'];
+                $address = $_POST['address'];
+                $email = $_POST['email'];
+                $phone = $_POST['phone'];
+                $kichhoat = $_POST['kichhoat'];
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+                $role = $_POST['role'];
+                // $imageurl = $_FILES['imageurl'];
+
+                $target_dir = "content/";
+                $target_file = $target_dir . basename($_FILES["imageurl"]["name"]);
+                // echo $target_file;
+                move_uploaded_file($_FILES["imageurl"]["tmp_name"], "../" . $target_file);
+                // echo $iduser;
+                if (empty($_FILES["imageurl"]["name"])) {
+                    $error['img'] = "Không để trống hình ảnh";
+                }
+                // Validate at server
+
+                if (strlen($name) == 0) {
+                    $error['name'] = "Không để trống họ tên!";
+                } else if (strlen($name) > 30) {
+                    $error['name'] = "Họ tên không vượt quá 30 ký tự!";
+                }
+
+                if (empty($email)) {
+                    $error['email'] = "không để trống email";
+                } else if (!is_email($email)) {
+                    $error['email'] = "Email không đúng định dạng!";
+                }
+
+                if (strlen($phone) == 0) {
+                    $error['phone'] = "Không để trống số điện thoại!";
+                } else if (!validating($phone)) {
+                    $error['phone'] = "Định dạng số điện thoại không chính xác!";
+                }
+
+                if (empty($username)) {
+                    $error['username'] = "Không để trống username!";
+                }
+
+                if (empty($password)) {
+                    $error['password'] = "không để trống password!";
+                }
+
+                if (!$error) {
+                    $is_inserted = user_insert($username, $password, $name, $address, $phone, $kichhoat, $target_file, $email, $role);
+
+                    if ($is_inserted) {
+                        echo '<div class="p-3 bg-light">Chúc mừng bạn đã thêm mời dùng mới thành công</div>';
+                    }
+                }
+            }
+            include "./view/user/adduser-page.php";
+            // include "./view/user/adduser-page.php";
+            break;
+        case 'edituser':
+            $error = array();
+            if (isset($_POST['edituserbtn']) && $_POST['edituserbtn']) {
+                $iduser = $_POST['iduser'];
+                $name = $_POST['fullname'];
+                $address = $_POST['address'];
+                $email = $_POST['email'];
+                $phone = $_POST['phone'];
+                $kichhoat = $_POST['kichhoat'];
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+                $role = $_POST['role'];
+
+                // $imageurl = $_FILES['imageurl'];
+
+                $target_dir = "content/";
+                $target_file = $target_dir . basename($_FILES["imageurl"]["name"]);
+                // echo $target_file;
+                move_uploaded_file($_FILES["imageurl"]["tmp_name"], "../" . $target_file);
+
+                // validation using php at server
+                if (empty($_FILES["imageurl"]["name"])) {
+                    $error['img'] = "Không để trống hình ảnh";
+                }
+                // Validate at server
+
+                if (strlen($name) == 0) {
+                    $error['name'] = "Không để trống họ tên!";
+                } else if (strlen($name) > 30) {
+                    $error['name'] = "Họ tên không vượt quá 30 ký tự!";
+                }
+
+                if (empty($email)) {
+                    $error['email'] = "không để trống email";
+                } else if (!is_email($email)) {
+                    $error['email'] = "Email không đúng định dạng!";
+                }
+
+                if (strlen($phone) == 0) {
+                    $error['phone'] = "Không để trống số điện thoại!";
+                } else if (!validating($phone)) {
+                    $error['phone'] = "Định dạng số điện thoại không chính xác!";
+                }
+
+                if (empty($username)) {
+                    $error['username'] = "Không để trống username!";
+                }
+
+                if (empty($password)) {
+                    $error['password'] = "không để trống password!";
+                }
+
+                if (!$error) {
+                    $is_inserted = user_insert($username, $password, $name, $address, $phone, $kichhoat, $target_file, $email, $role);
+
+                    if ($is_inserted) {
+                        echo '<div class="p-3 bg-light">Chúc mừng bạn đã thêm mời dùng mới thành công</div>';
+                    }
+                }
+
+                $is_updated = user_update($iduser, $username, $password, $name, $address, $phone, $kichhoat, $target_file, $email, $role);
+
+                if ($is_updated) {
+                    echo '<div class="p-3 bg-success">Chúc mừng bạn đã cập nhật người dùng thành công</div>';
+                }
+            }
+
+            include "./view/user/edituser-page.php";
+            break;
+        case 'deleteuser':
+            if (isset($_GET['id'])) {
+                $id_deleted = user_delete($_GET['id']);
+                if ($id_deleted) {
+                    echo '<div class="p-3 bg-success text-white">Chúc mừng bạn đã xóa người dùng thành công</div>';
+
+                }
+            }
+
+            include "./view/user/userlist-page.php";
+            break;
+
+        case 'orderlist':
+
+            include "./view/order/orderlist-page.php";
+            break;
+
+        case 'orderdetail':
+            if (isset($_GET['iddh'])) {
+                $iddh = $_GET['iddh'];
+                $cart_list = getshowcart($iddh);
+                include "./view/order/orderdetail-page.php";
+            }
+
+            break;
+        case 'userorderdetail':
+            if (isset($_GET['iduser'])) {
+                $iduser = $_GET['iduser'];
+                $cart_list = getshowcartbyiduser($iduser);
+                // var_dump($cart_list);
+                include "./view/order/userorderdetail-page.php";
+            }
+
+            break;
+        case 'logout':
+            unset($_SESSION['role']);
+            unset($_SESSION['username']);
+            unset($_SESSION['iduser']);
+            header('location: loginpage.php');
+            break;
+
+        default:
+            include "./view/pages/homepage.php";
+    }
+} else {
+    include "./view/pages/homepage.php";
+}
+
+include "./view/common/footer.php";

@@ -1,0 +1,134 @@
+
+
+.error-message {
+    color: red;
+}
+
+
+.sidebar {
+
+}
+
+/* Card component */
+
+.card {
+    margin-top: 1rem;
+}
+
+.card-title {
+    height:  4.4rem; /* Chiều cao để hiển thị dòng text */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;  /* Số dòng hiển thị lên */
+}
+
+.card-img-top {
+    height: 18rem;
+    width: 100%;
+    object-fit: contain;
+}
+
+
+.card-img-top {
+
+}
+
+.card-body {
+
+}
+
+.card-title {
+
+}
+
+.card-price {
+    color: orange;
+}
+
+.card-discount {
+    right: -7%;
+    top: 4%;
+}
+
+.card-view {
+    left: 2%;
+    top: 2%;
+}
+
+/* Nav owl carousel */
+
+button.owl-prev span, button.owl-next span{
+    font-size: 1.6rem;
+    padding: 0.3rem 1rem;
+    background-color: orange;
+}
+
+.owl-carousel {
+    position: relative;
+}
+
+.owl-carousel .owl-item img {
+    height: 20rem;
+    object-fit: cover;
+}
+
+.owl-nav {
+    position: absolute;
+    top: -4rem;
+    right: 0;
+    display: inline-flex;
+    justify-content: flex-end;
+}
+
+.carousel-inner{
+
+}
+.carousel-item{
+    position: relative;
+}
+
+.bd-placeholder-img{
+
+}
+.carousel-inner .container{
+
+}
+
+.carousel-caption{
+
+}
+
+.carouosel-img{
+/* position: absolute; */
+/* z-index: -1; */
+
+width: 16rem;
+height: 16rem;
+object-fit: cover;
+}
+
+.search-sidebar {
+    
+}
+
+
+/* shopping cart page */
+
+.price-item-wrap {
+    /* width: 4rem; */
+}
+
+.price-item {
+    
+}
+
+.quantity-input {
+    width: 3rem;
+}
+
+label[id*="-error"] {
+    color: red;
+    position: relative;
+    padding: 0;
+}

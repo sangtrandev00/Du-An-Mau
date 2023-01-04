@@ -1,0 +1,37 @@
+.btn-toggle-nav a {
+
+}
+
+.sidebar {
+    height: 100vh;
+}
+
+.sidebar__container {
+    height: 100%;
+}
+
+.header {
+    display: flex;
+}
+
+.content {
+    width: 100%;
+}
+
+.topbar__profile {
+    width: 10rem;
+}
+
+.table-order {
+    width: 80rem;
+}
+
+.error-message {
+    color: red;
+}
+
+label[id*="-error"] {
+    color: red;
+    position: relative;
+    padding: 0;
+}
