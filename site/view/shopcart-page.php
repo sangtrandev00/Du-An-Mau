@@ -95,7 +95,7 @@ if (isset($_SESSION['giohang']) && count($_SESSION['giohang']) > 0) {
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase">items <?php echo $numberOfCart ?></h5>
                                         <h5 class="subtotal">
-                                            <span><?php echo number_format($totalCartItem); ?></span>VND
+                                            <span><?php echo number_format($sum); ?></span>VND
                                         </h5>
                                     </div>
 

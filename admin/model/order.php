@@ -37,3 +37,16 @@ function getshowcartbyiduser($iduser)
     $kq = $stmt->fetchAll();
     return $kq;
 }
+
+function updateorderbyid($iddh)
+{
+    $sql = "update tbl_order set trangthai = 'confirmed' where id = $iddh;";
+    pdo_execute($sql);
+    return true;
+}
+function deleteorderbyid($iddh)
+{
+    $sql = "delete from tbl_order where id = $iddh;";
+    pdo_execute($sql);
+    return true;
+}

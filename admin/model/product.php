@@ -1,5 +1,4 @@
 <?php
-
 function get_all_products($new, $sale, $view, $cateid = 0)
 {
     try {
@@ -120,6 +119,7 @@ function update_product($id, $cateid, $tensp, $oldprice = 0, $newprice = 0, $sho
 {
 
     try {
+
         $conn = connectdb();
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -161,6 +161,7 @@ function update_product($id, $cateid, $tensp, $oldprice = 0, $newprice = 0, $sho
 function delete_product($idsp)
 {
     try {
+
         $conn = connectdb();
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

@@ -32,7 +32,7 @@ if (isset($_POST['loginbtn']) && $_POST['loginbtn']) {
             // var_dump($kq);
             $role = $kq[0]['vai_tro'];
             // echo $role;
-            if ($role == 1) {
+            if ($role == 1 || $role == 2) {
                 // $_SESSION['role'] = $role;
                 // $_SESSION['username'] = $kq[0]['user'];
                 // $_SESSION['iduser'] = $kq[0]['id'];

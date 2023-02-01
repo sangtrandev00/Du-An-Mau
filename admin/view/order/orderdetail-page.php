@@ -3,7 +3,7 @@
     <a href="./index.php?act=orderlist">
         << Trở về danh sách đơn hàng</a>
 
-            <h3 class="title mt-5">Danh sách đơn hàng theo id don hang la: <?php echo $iddh ?> </h3>
+            <h3 class="title mt-5">Danh sách đơn hàng theo id đơn hàng là: <?php echo $iddh ?> </h3>
             <table class="table table-hover shadow">
                 <thead class="bg-primary text-white">
                     <tr>
@@ -30,7 +30,7 @@ foreach ($cart_list as $cart_item) {
                 <td> <img width=100 height=100 style="object-fit: cover;" src="' . $img_url . '"/></td>
                 <td>' . $cart_item['tensp'] . '</td>
                 <td>' . $cart_item['soluong'] . '</td>
-                <td>$' . $cart_item['dongia'] . '</td>
+                <td>' . $cart_item['dongia'] . 'VND</td>
             </tr>
                 ';
 }

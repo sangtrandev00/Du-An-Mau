@@ -1,7 +1,7 @@
 <div class="table-responsive p-3">
 
     <div class="table-responsive p-3">
-        <h3 class="bg-success p-3 text-uppercase">Thống kê hàng hóa từng loại</h3>
+        <h3 class="bg-success text-white p-3 text-uppercase">Thống kê hàng hóa từng loại</h3>
         <table class="table table-primary">
             <thead>
                 <tr>

@@ -22,6 +22,9 @@ if (isset($_GET['id'])) {
                 <img class="img-fluid" src="<?php echo "../" . $product['hinhanh1'] ?>" alt="ProductS">
                 <div class="row my-3 previews">
                     <div class="col-md-3">
+                        <img class="w-100" src="<?php echo "../" . $product['hinhanh1'] ?>" alt="Sale">
+                    </div>
+                    <div class="col-md-3">
                         <img class="w-100" src="<?php echo "../" . $product['hinhanh2'] ?>" alt="Sale">
                     </div>
                     <div class="col-md-3">
@@ -29,9 +32,6 @@ if (isset($_GET['id'])) {
                     </div>
                     <div class="col-md-3">
                         <img class="w-100" src="<?php echo "../" . $product['hinhanh4'] ?>" alt="Sale">
-                    </div>
-                    <div class="col-md-3">
-                        <img class="w-100" src="<?php echo "../" . $product['hinhanh5'] ?>" alt="Sale">
                     </div>
                 </div>
             </div>
@@ -130,10 +130,11 @@ if (isset($_GET['id'])) {
                 </div>
 
                 <?php
-$commentList = comment_select_by_product($idproduct);
+$commentList = comment_select_by_product_has_approved($idproduct);
 foreach ($commentList as $comment) {
     # code...
     $user = user_select_by_id($comment['ma_nguoidung']);
+    $imgUrl = substr($user['hinh_anh'], 0, 4) == "http" ? $user['hinh_anh'] : "../" . $user['hinh_anh'];
 
     echo '
                     <div class="card mb-4">
@@ -145,7 +146,7 @@ foreach ($commentList as $comment) {
 
                         <div class="d-flex justify-content-between">
                             <div class="d-flex flex-row align-items-center">
-                                <img src="../' . $user['hinh_anh'] . '" alt="avatar"
+                                <img src="' . $imgUrl . '" alt="avatar"
                                     width="25" height="25" />
                                 <p class="small mb-0 ms-2">' . $user['ho_ten'] . '</p>
                             </div>

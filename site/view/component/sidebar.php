@@ -1,6 +1,6 @@
 <div class="sidebar">
     <div class="list-group mt-3">
-        <h4 class="bg-secondary p-3">Danh mục</h4>
+        <h4 class="bg-secondary p-3 text-light">Danh mục</h4>
         <?php
 $cateList = cate_select_all();
 foreach ($cateList as $cateItem) {
@@ -23,14 +23,12 @@ foreach ($cateList as $cateItem) {
     </div>
     <div class="list-group mt-3">
 
-        <h4 class="bg-secondary p-3">Top 10 yêu thích</h4>
+        <h4 class="bg-secondary p-3 text-light">Top 10 yêu thích</h4>
         <?php
 $topViewProductList = product_select_top(10);
 foreach ($topViewProductList as $product) {
     # code...
-    echo '
-    <a href="./index.php?act=detailproductpage&id=' . $product['masanpham'] . '" class="list-group-item list-group-item-action">' . $product['tensp'] . ' <span class="badge bg-secondary">' . $product['so_luot_xem'] . ' view</span> </a>
-    ';
+    echo '<a href="./index.php?act=detailproductpage&id=' . $product['masanpham'] . '" class="list-group-item list-group-item-action">' . $product['tensp'] . ' <span class="badge bg-secondary">' . $product['so_luot_xem'] . ' view</span> </a> ';
 }
 ?>
     </div>

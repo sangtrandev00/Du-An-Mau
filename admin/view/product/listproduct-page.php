@@ -3,6 +3,7 @@
     <table class="table table-primary">
         <thead>
             <tr>
+
                 <th></th>
                 <th scope="col">Mã</th>
                 <th scope="col">Tên</th>

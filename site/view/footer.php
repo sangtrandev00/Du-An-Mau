@@ -35,14 +35,14 @@
 
     <!-- Section: Links  -->
     <section class="">
-        <div class="container text-center text-md-start mt-5">
+        <div class="container text-center text-md-start mt-5 pb-5">
             <!-- Grid row -->
             <div class="row mt-3">
                 <!-- Grid column -->
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fas fa-gem me-3"></i>Company name
+                        <i class="fas fa-gem me-3"></i>DAM SHOP
                     </h6>
                     <p>
                         Cửa hàng đồ thể thao chuyên phục vụ tận tình với đội ngũ trẻ trang đầy năng lượng
@@ -151,8 +151,8 @@ foreach ($cateList as $cateItem) {
 
     <!-- Copyright -->
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2021 Copyright:
-        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        © <?php echo date("Y"); ?> Copyright:
+        <a class="text-reset fw-bold" href="">SangTranDev</a>
     </div>
     <!-- Copyright -->
 </footer>

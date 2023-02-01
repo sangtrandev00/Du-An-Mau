@@ -4,6 +4,12 @@ if (isset($_GET['cateid']) && $_GET['cateid'] > 0) {
 } else {
     $cateid = 0;
 }
+
+$minPrice = product_select_by_min_price();
+$maxPrice = product_select_by_max_price();
+
+//var_dump($minPrice[0]['min_don_gia']);
+
 ?>
 
 <div class="row">
@@ -61,9 +67,12 @@ foreach ($cateList as $cateItem) {
                             </div>
                             <div class="form-group my-3">
                                 <input type="number" name="minPrice" min=0 max="99999999"
-                                    oninput="validity.valid||(value='0');" id="min_price" class="price-range-field" />
+                                    oninput="validity.valid||(value='0');"
+                                    value="<?php echo $minPrice[0]['min_don_gia'] ?>" id="min_price"
+                                    class="price-range-field" />
                                 <input type="number" min=0 max="100000000"
-                                    oninput="validity.valid||(value='100000000');" id="max_price" name="maxPrice"
+                                    oninput="validity.valid||(value='100000000');"
+                                    value="<?php echo $maxPrice[0]['max_don_gia'] ?>" id="max_price" name="maxPrice"
                                     class="price-range-field" />
                             </div>
                             <input type="submit" name="priceRangeBtn" class="price-range-search btn btn-primary"
@@ -75,13 +84,13 @@ foreach ($cateList as $cateItem) {
                 </div>
             </div>
             <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                <!-- <h2 class="accordion-header" id="panelsStayOpen-headingThree">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
                         aria-controls="panelsStayOpen-collapseThree">
                         Theo lượt xem sản phẩm
                     </button>
-                </h2>
+                </h2> -->
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
                     aria-labelledby="panelsStayOpen-headingThree">
                     <div class="accordion-body">
@@ -133,11 +142,14 @@ foreach ($cateList as $cateItem) {
 
 // BƯỚC 2: TÌM TỔNG SỐ RECORDS
 $sql = "SELECT * FROM tbl_sanpham";
+
 // Case: Tìm kiếm theo tên
+
 if (isset($_POST['searchbtn']) && $_POST['searchbtn']) {
     $pattern = $_POST['searchbyname'];
     $sql .= " WHERE tensp like '%$pattern%'";
 }
+
 // Case tìm kiếm theo danh mục
 if (isset($_GET["cateid"])) {
     $cateid = $_GET["cateid"];
@@ -146,9 +158,11 @@ if (isset($_GET["cateid"])) {
 
 // Case: Tìm kiếm theo sắp xếp tăng dần
 // Case: Tìm kiếm theo sắp xếp giảm dần
+
 // Filter by price
 if (isset($_GET['sortbyprice'])) {
     $sort_pattern = $_GET['sortbyprice'];
+
     // echo $sort_pattern;
     if ($sort_pattern == "increase") {
         $sql .= " ORDER BY don_gia";
@@ -187,6 +201,7 @@ $limit = 9;
 
 // BƯỚC 4: TÍNH TOÁN TOTAL_PAGE VÀ START
 // tổng số trang
+
 $total_page = ceil($total_records / $limit);
 
 // Giới hạn current_page trong khoảng 1 đến total_page
@@ -213,6 +228,7 @@ $start = ($current_page - 1) * $limit;
 //     $pattern = $_POST['searchbyname'];
 //     $sql .= " WHERE tensp like '%$pattern%'";
 // }
+
 $sql .= " LIMIT $start, $limit";
 // Có limit và start rồi thì truy vấn CSDL lấy danh sách SẢN PHẨM
 $conn = connectdb();

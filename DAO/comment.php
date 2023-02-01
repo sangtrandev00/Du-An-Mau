@@ -26,6 +26,24 @@ function comment_delete($ma_binhluan)
     }
 
 }
+function comment_approve($ma_binhluan)
+{
+    $sql = "UPDATE tbl_binhluan set duyet = 1  WHERE ma_binhluan=?";
+    pdo_execute($sql, $ma_binhluan);
+
+}
+
+function comment_delete_by_iduser($iduser)
+{
+    $sql = "DELETE FROM tbl_binhluan WHERE ma_nguoidung=?";
+    if (is_array($iduser)) {
+        foreach ($iduser as $ma) {
+            pdo_execute($sql, $ma);
+        }
+    } else {
+        pdo_execute($sql, $iduser);
+    }
+}
 
 function comment_select_all()
 {
@@ -50,10 +68,18 @@ function comment_exist($ma_binhluan)
 
 function comment_select_by_product($ma_sanpham)
 {
-    $sql = "SELECT bl.*, sp.tensp FROM tbl_binhluan bl JOIN tbl_sanpham sp ON sp.masanpham=bl.ma_sanpham WHERE bl.ma_sanpham=? ORDER BY ngay_binhluan DESC";
+    $sql = "SELECT bl.*, sp.tensp FROM tbl_binhluan bl JOIN tbl_sanpham sp ON sp.masanpham=bl.ma_sanpham WHERE bl.ma_sanpham=?  ORDER BY ngay_binhluan DESC";
     return pdo_query($sql, $ma_sanpham);
 
 }
+
+function comment_select_by_product_has_approved($ma_sanpham)
+{
+    $sql = "SELECT bl.*, sp.tensp FROM tbl_binhluan bl JOIN tbl_sanpham sp ON sp.masanpham=bl.ma_sanpham WHERE bl.ma_sanpham=? AND duyet = 1 ORDER BY ngay_binhluan DESC";
+    return pdo_query($sql, $ma_sanpham);
+
+}
+
 function count_comment_select_by_iduser($ma_nguoidung)
 {
     $sql = "SELECT count(ma_nguoidung) as 'so_binhluan', bl.*, sp.tensp FROM tbl_binhluan bl JOIN tbl_sanpham sp ON sp.masanpham=bl.ma_sanpham WHERE bl.ma_sanpham=? group by bl.ma_sanpham order by bl.ngay_binhluan desc";

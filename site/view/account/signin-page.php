@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="col-6">
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
         <form id="signinForm" action="./index.php?act=signinpage" method="post" class="p-5 needs-validation" novalidate>
             <h1 class="h3 mb-3 fw-normal">Đăng nhập vào trang</h1>
 

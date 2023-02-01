@@ -212,3 +212,52 @@ function validateUploadImage($fileName)
     //     }
 
 }
+
+function getPagination()
+{
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+
+// PHẦN XỬ LÝ PHP
+    // B1: KET NOI CSDL
+    $conn = new PDO("mysql:host=$servername;dbname=pagin_example", $username, $password); // replace here
+    // BƯỚC 2: TÌM TỔNG SỐ RECORDS
+    $stmt = $conn->prepare("SELECT * FROM news"); // replace here
+    $stmt->execute();
+
+// set the resulting array to associative
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+    $finalresult = $stmt->fetchAll();
+
+    $total_records = count($finalresult);
+
+// BƯỚC 3: TÌM LIMIT VÀ CURRENT_PAGE
+    $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+    $limit = 10; // Replace here
+
+// BƯỚC 4: TÍNH TOÁN TOTAL_PAGE VÀ START
+    // tổng số trang
+    $total_page = ceil($total_records / $limit);
+
+// Giới hạn current_page trong khoảng 1 đến total_page
+    if ($current_page > $total_page) {
+        $current_page = $total_page;
+    } else if ($current_page < 1) {
+        $current_page = 1;
+    }
+
+// Tìm Start
+    $start = ($current_page - 1) * $limit;
+
+// BƯỚC 5: TRUY VẤN LẤY DANH SÁCH TIN TỨC
+    // Có limit và start rồi thì truy vấn CSDL lấy danh sách tin tức
+
+    $stmt2 = $conn->prepare("SELECT * FROM news LIMIT $start, $limit");
+    $stmt2->execute();
+    $result2 = $stmt2->fetchAll();
+
+}

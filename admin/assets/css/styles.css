@@ -3,7 +3,7 @@
 }
 
 .sidebar {
-    height: 100vh;
+    height: 100%;
 }
 
 .sidebar__container {
@@ -35,3 +35,12 @@ label[id*="-error"] {
     position: relative;
     padding: 0;
 }
+
+.offcanvas {
+    width: 17rem!important;
+}
+
+.offcanvas-header {
+    align-items: center;
+}
+

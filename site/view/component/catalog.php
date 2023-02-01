@@ -36,5 +36,6 @@
         <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
     </div>
 </div> -->
+<h2 class="text-center my-3">DANH SÁCH SẢN PHẨM</h2>
 
-<hr class="featurette-divider">
+<hr class="feature-divider">

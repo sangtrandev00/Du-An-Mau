@@ -1,6 +1,6 @@
 <div class="table-responsive p-3">
     <!-- <a href="./index.php?act=addcate" class="btn btn-success mb-3">Thêm danh mục</a> -->
-    <h4 class="bg-primary bg-gradient p-3 text-white">Danh sách danh mục hàng hóa</h3>
+    <h4 class="bg-success bg-gradient p-3 text-white">Danh sách danh mục hàng hóa</h3>
         <table class="table table-primary">
             <thead>
                 <tr>

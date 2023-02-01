@@ -1,18 +1,28 @@
 <?php
+//var_dump($_SESSION['iduser']);
+if (isset($_SESSION['iduser']) && $_SESSION['iduser'] > 0) {
 
+}
 ?>
 
 <div class="content">
+
     <nav class="topbar navbar navbar-expand-lg navbar-light bg-light shadow">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i
+                    class="fa-solid fa-arrow-right-arrow-left"></i> Hiển thị Điều khiển</button>
+
+            <!-- <a class="navbar-brand" href="#">Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </button> -->
+
+            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
+
+                <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
@@ -34,9 +44,10 @@
                         </ul>
                     </li>
 
-                </ul>
+                </ul> -->
+
                 <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control ms-5" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 <div class="topbar__profile navbar-nav me-5">
@@ -46,7 +57,7 @@
 
 
                             <img style="width: 50px; height: 50px; border-radius: 50%;"
-                                src="<?php $user['hinh_anh']?>" />
+                                src="<?php if (!isset($user['hinh_anh'])) {echo 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80';} else {echo $user['hinh_anh'];}?> " />
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">
                             <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>

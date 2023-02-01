@@ -1,9 +1,7 @@
 <div class="report-chart p-3">
-    <h1>Biểu đồ hình tròn thống kê</h1>
+    <h1 class="p-3 bg-success text-white">Biểu đồ hình tròn thống kê</h1>
     <div id="piechart"></div>
 </div>
-
-
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -28,7 +26,6 @@ foreach ($reportList as $report) {
 }
 ?>
 
-
         // ['Work', 12],
         // ['Eat', 2],
         // ['TV', 4],
@@ -39,7 +36,7 @@ foreach ($reportList as $report) {
     // Optional; add a title and set the width and height of the chart
     var options = {
         'title': 'Thống kê số lượng đơn hàng theo loại',
-        'width': 800,
+        'width': 1000,
         'height': 400
     };
 

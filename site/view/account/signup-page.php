@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="col-6">
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
         <form id="signupForm" action="index.php?act=signuppage" method="post" class="p-5 ">
 
             <h1 class="h3 mb-3 fw-normal">Đăng ký tài khoản</h1>

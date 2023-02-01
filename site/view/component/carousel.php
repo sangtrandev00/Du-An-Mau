@@ -27,7 +27,7 @@ foreach ($carouselList as $carouselItem) {
                 <img class="carouosel-img"
                     src="../' . $carouselItem['hinhanh1'] . '"
                     alt="">
-                <h1>' . $carouselItem['tensp'] . '</h1>
+                <h1 class="carousel-title">' . $carouselItem['tensp'] . '</h1>
                 <p>Các sản phẩm đặc biệt và chất lượng mua ngay kẻo lỡ</p>
                 <p><a class="btn btn-lg btn-primary" href="./index.php?act=detailproductpage&id=' . $carouselItem['masanpham'] . '">Mua ngay!</a></p>
 

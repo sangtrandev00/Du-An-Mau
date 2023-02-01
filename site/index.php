@@ -27,6 +27,7 @@ if (isset($_GET['act'])) {
         case 'intropage':
             include "./view/intro-page.php";
             break;
+
         case 'shoppage':
 
             include "./view/shoppage.php";
@@ -135,9 +136,11 @@ if (isset($_GET['act'])) {
                 }
             }
             break;
+
         // case 'detailorderpage':
         //     include "./view/detailorder-page";
         //     break;
+
         case 'addtocart':
             if (isset($_SESSION['iduser'])) {
 
@@ -160,6 +163,7 @@ if (isset($_GET['act'])) {
                     }
 
                     $flag = 0;
+
                     // Kiểm tra sản phẩm có tồn tại trong giỏ hàng hay không ?
                     // Nếu có chỉ cập nhất lại số lượng
 
@@ -168,6 +172,7 @@ if (isset($_GET['act'])) {
                     // Khởi tạo một mảng con trước khi đưa vào giỏ
 
                     $i = 0;
+
                     foreach ($_SESSION['giohang'] as $itemsp) {
                         # code...
                         // var_dump($itemsp);
@@ -178,6 +183,7 @@ if (isset($_GET['act'])) {
                             $flag = 1;
                             break;
                         }
+
                         $i++;
                     }
 
@@ -186,6 +192,7 @@ if (isset($_GET['act'])) {
                         // array_push($_SESSION['giohang'], $itemsp);
                         // $_SESSION['giohang'][] = $itemsp;
                         $_SESSION['giohang'][] = $itemsp;
+
                     }
 
                     // header('location: index.php?act=viewcart'); // Tại sao lại có dòng này ?
@@ -317,7 +324,7 @@ if (isset($_GET['act'])) {
                     // var_dump($kq);
                     $role = $kq[0]['vai_tro'];
                     // echo $role;
-                    if ($role == 4) {
+                    if ($role == 3) {
                         // $_SESSION['role'] = $role;
                         // $_SESSION['username'] = $kq[0]['user'];
                         // $_SESSION['iduser'] = $kq[0]['id'];
@@ -546,21 +553,33 @@ if (isset($_GET['act'])) {
         case 'settingacountpage':
             include "./view/account/setting-acount-page.php";
             break;
+        case 'historyorderdetailpage':
+            if (isset($_GET['id'])) {
+                $cartList = getshowcart($_GET['id']);
+                //var_dump($cartList);
+            }
+            include "./view/account/historyorder-detail-page.php";
+            break;
         case 'logout':
             unset($_SESSION['role']);
             unset($_SESSION['username']);
             unset($_SESSION['iduser']);
             header('location: index.php');
             break;
+
         default:
             include "./view/component/carousel.php";
             // include "./view/component/catalog.php";
             include "./view/home.php";
     }
+
 } else {
     include "./view/component/carousel.php";
+
     // include "./view/component/catalog.php";
+
     include "./view/home.php";
+
 }
 
 include "./view/footer.php";

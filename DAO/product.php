@@ -31,6 +31,7 @@ function product_select_all()
     $sql = "SELECT * FROM tbl_sanpham";
     return pdo_query($sql);
 }
+
 function product_select_all_lastest()
 {
     $sql = "SELECT * FROM tbl_sanpham order by ngay_nhap desc";
@@ -121,13 +122,29 @@ function product_select_page()
     // if (exist_param("page_no")) {
     //     $_SESSION['page_no'] = $_REQUEST['page_no'];
     // }
+
     // if ($_SESSION['page_no'] < 0) {
     //     $_SESSION['page_no'] = $_SESSION['page_count'] - 1;
     // }
+
     // if ($_SESSION['page_no'] >= $_SESSION['page_count']) {
     //     $_SESSION['page_no'] = 0;
     // }
+
     // $sql = "SELECT * FROM hang_hoa ORDER BY ma_hh LIMIT " . $_SESSION['page_no'] . ", 10";
+
     // return pdo_query($sql);
 
+}
+
+function product_select_by_min_price()
+{
+    $sql = "SELECT min(don_gia) as min_don_gia FROM tbl_sanpham";
+    return pdo_query($sql);
+}
+
+function product_select_by_max_price()
+{
+    $sql = "SELECT max(don_gia) as max_don_gia FROM tbl_sanpham";
+    return pdo_query($sql);
 }

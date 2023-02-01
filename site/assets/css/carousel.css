@@ -10,6 +10,16 @@
     bottom: 3rem;
     z-index: 10;
   }
+
+  .carousel-title {
+    height: 3rem;
+    display:-webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+  }
   
   /* Declare heights because of positioning of img element */
   .carousel-item {

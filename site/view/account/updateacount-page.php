@@ -96,8 +96,14 @@ if (isset($_SESSION['iduser'])) {
 <div class="col-6">
 
     <h5 class="my-3">Hình đại diện</h5>
-    <img src="<?php echo '../' . $user['hinh_anh'] ?>" alt="fsdf"
-        style="width: 8rem; height: 8rem; object-fit: cover; border-radius: 50%" class="account-img">
+
+
+    <?php
+$imgUrl = substr($user['hinh_anh'], 0, 4) == "http" ? $user['hinh_anh'] : "../" . $user['hinh_anh'];
+
+?>
+    <img src="<?php echo $imgUrl ?>" alt="fsdf" style="width: 8rem; height: 8rem; object-fit: cover; border-radius: 50%"
+        class="account-img">
     <h5 class="mt-3">Thông tin tài khoản: </h5>
     <ul>
         <li>

@@ -11,11 +11,13 @@ function plusQuantity(number) {
     // console.log(quantity);
     let currentNumber = Number(quantity.value);
 
-    if(currentNumber === 0) {
-        // document.querySelector(".main-product__quantity-control-item").setAttribute("disabled",true);
-    }
 
     currentNumber+= number;
+    
+    if(currentNumber <= 1) {
+        // document.querySelector(".main-product__quantity-control-item").setAttribute("disabled",true);
+        currentNumber = 1;
+    }
     console.log('currentNumber',currentNumber);
     console.log('priceItem',priceItem);
     const totalMoneyItem = currentNumber * priceValue;

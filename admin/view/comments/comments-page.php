@@ -1,6 +1,6 @@
 <div class="table-responsive p-3">
     <!-- <a href="./index.php?act=addcate" class="btn btn-success mb-3">Thêm danh mục</a> -->
-    <h3 class="bg-success p-3">Tổng hợp bình luận</h3>
+    <h3 class="bg-success text-white p-3">Tổng hợp bình luận</h3>
 
     <table class="table table-primary">
         <thead>
@@ -9,7 +9,7 @@
                 <th scope="col">Sản phẩm</th>
                 <th scope="col">Số bình luận</th>
                 <th scope="col">Mới nhất</th>
-                <th scope="col" colspan="2">Cũ nhất</th>
+                <th scope="col" colspan="2">Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +40,6 @@ foreach ($commentList as $comment) {
         <a href="" class="btn btn-primary">Chọn tất cả</a>
         <a href="" class="btn btn-primary">Bỏ chọn tất cả</a>
         <a href="" class="btn btn-primary">Xóa các mục chọn</a>
-        <a href="" class="btn btn-primary">Nhập thêm</a>
+        <!-- <a href="" class="btn btn-primary">Nhập thêm</a> -->
     </div>
 </div>

@@ -13,6 +13,7 @@ function user_update($iduser, $tai_khoan, $mat_khau, $ho_ten, $diachi, $sodienth
     pdo_execute($sql, $tai_khoan, $mat_khau, $ho_ten, $diachi, $sodienthoai, $email, $hinh_anh, $kich_hoat == 1, $vai_tro == 1, $iduser);
     return true;
 }
+
 function user_update_info($iduser, $tai_khoan, $ho_ten, $diachi, $sodienthoai, $kich_hoat = 1, $hinh_anh, $email, $vai_tro = 1)
 {
     $sql = "UPDATE tbl_nguoidung SET tai_khoan=?, ho_ten=?, diachi=?, sodienthoai=?, email=?,hinh_anh=?,kich_hoat=?,vai_tro=? WHERE id=?";
@@ -66,10 +67,17 @@ function email_exist_by_username($email, $username)
     return pdo_query_value($sql, $email, $username) > 0;
 }
 
-function user_select_by_role($vai_tro)
+function admin_select($vai_tro1, $vai_tro2)
 {
+
+    $sql = "SELECT * FROM tbl_nguoidung WHERE vai_tro=? or vai_tro = ?";
+    return pdo_query($sql, $vai_tro1, $vai_tro2);
+}
+function user_select($vai_tro1)
+{
+
     $sql = "SELECT * FROM tbl_nguoidung WHERE vai_tro=?";
-    return pdo_query($sql, $vai_tro);
+    return pdo_query($sql, $vai_tro1);
 }
 
 function user_change_password($iduser, $newpass)

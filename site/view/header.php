@@ -39,16 +39,13 @@ if (isset($_GET['act'])) {
         case 'updatecart':
         case 'viewcart':
         case 'shopcartpage':
-            echo '
-        <script src="./assets/css/shopcart-page.css">
-
-        </script>
-        ';
+            echo `<link rel="stylesheet" href="./assets/css/shopcart-page.css">
+																																																		        </link>`;
             break;
         case 'detailproductpage':
             echo '
-
-            ';
+            <link rel="stylesheet" href="./assets/css/detailpage.css">
+           ';
             break;
         case 'signuppage':
 
@@ -66,7 +63,6 @@ if (isset($_GET['act'])) {
             break;
         default:
             echo '
-
 
                 ';
     }
@@ -88,9 +84,9 @@ if (isset($_GET['act'])) {
     <div class="container-fluid">
         <header>
             <!-- place navbar here -->
-            <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <nav class="navbar navbar-expand-sm navbar-light bg-light p-4">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="./index.php">FPT POLYTECHNIC</a>
+                    <a class="navbar-brand" href="./index.php">DAM SHOP</a>
                     <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
                         aria-label="Toggle navigation">
@@ -145,7 +141,7 @@ if (isset($_SESSION['username']) && $_SESSION['username'] != '') {
     $iduser = $_SESSION['iduser'];
     $user = user_select_by_id($iduser);
     // var_dump($user);
-    $imgUrl = "../" . $user['hinh_anh'];
+    $imgUrl = substr($user['hinh_anh'], 0, 4) == "http" ? $user['hinh_anh'] : "../" . $user['hinh_anh'];
 
     ?>
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
@@ -179,16 +175,25 @@ if (isset($_SESSION['username']) && $_SESSION['username'] != '') {
                             </li>
                         </ul>
                         <form action="./index.php?act=shoppage" method="post" class="d-flex my-2 my-lg-0">
+
+                            <input name="searchbtn" class="btn btn-outline-success my-2 my-sm-0 me-3" type="submit"
+                                value="Tìm kiếm" />
+
                             <input name="searchbyname" placeholder="Tìm kiếm sản phẩm" class="form-control me-sm-2"
                                 type="text">
-                            <input name="searchbtn" class="btn btn-outline-success my-2 my-sm-0" type="submit"
-                                value="Tìm kiếm" />
+
                         </form>
-                        <div class="mx-2">
-                            <a href="./index.php?act=viewcart">Giỏ hàng
-                                <?php if (isset($_SESSION['giohang'])) {echo count($_SESSION['giohang']);} else {echo 0;}?>
-                                items</a>
-                        </div>
+
+                        <a href="./index.php?act=viewcart" type="button" class="btn btn-primary position-relative">
+                            Giỏ hàng
+                            <i class="fa-solid fa-cart-shopping"></i>
+
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                <span class="p-1"><?php echo count($_SESSION['giohang']) ?></span>
+                            </span>
+
+                        </a>
                     </div>
                 </div>
             </nav>

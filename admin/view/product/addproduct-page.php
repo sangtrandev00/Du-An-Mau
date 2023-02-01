@@ -33,6 +33,7 @@
 
                 <select name="ma_danhmuc" class="form-select form-control" aria-label="Default select example">
                     <option selected>Mở danh mục</option>
+
                     <?php
 $cateList = cate_select_all();
 foreach ($cateList as $cateItem) {

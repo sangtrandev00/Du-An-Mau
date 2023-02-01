@@ -1,5 +1,5 @@
 <div class="table-responsive p-3">
-    <h3 class="bg-success p-3 text-white">Quản lý người dùng</h3>
+    <h3 class="bg-success p-3 text-white">Quản lý quản trị viên</h3>
     <table class="table table-primary">
         <thead>
             <tr>
@@ -14,8 +14,8 @@
         </thead>
         <tbody>
             <?php
-$userList = user_select_all();
-foreach ($userList as $user) {
+$adminList = admin_select(1, 2);
+foreach ($adminList as $user) {
     $vaitro = '';
     switch ($user['vai_tro']) {
         case '1':
@@ -24,15 +24,15 @@ foreach ($userList as $user) {
             break;
         case '2':
             # code...
-            $vaitro = "Quản lý";
+            $vaitro = "Nhân viên";
             break;
         case '3':
             # code...
-            $vaitro = "Nhân viên";
+            $vaitro = "Khách hàng";
             break;
         case '4':
             # code...
-            $vaitro = "Khách hàng";
+            // $vaitro = "Khách hàng";
             break;
         default:
             # code...
@@ -47,7 +47,7 @@ foreach ($userList as $user) {
     <td scope="row">' . $user['id'] . '</td>
     <td>' . $user['ho_ten'] . '</td>
     <td>' . $user['email'] . '</td>
-    <td><img width=100 height=100 src="../' . $user['hinh_anh'] . '" /></td>
+    <td><img width=100 height=100 style="object-fit: cover;" src="' . $user['hinh_anh'] . '" /></td>
     <td>' . $vaitro . '</td>
     <td><a href="./index.php?act=edituser&id=' . $user['id'] . '" class="btn btn-primary">Sửa</a><a href="./index.php?act=deleteuser&id=' . $user['id'] . '"
             class="btn btn-danger mx-3">Xóa</a></td>

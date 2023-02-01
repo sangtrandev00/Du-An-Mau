@@ -21,6 +21,54 @@ header('Content-Type: text/html; charset=utf-8');
     <link rel="stylesheet" href="./assets/css/signin.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
 
+
+    <?php
+if (isset($_GET['act'])) {
+    switch ($_GET['act']) {
+        case 'contactpage':
+
+            break;
+        case 'intropage':
+
+            break;
+        case 'updatecart':
+        case 'viewcart':
+        case 'shopcartpage':
+            echo `<script src="./assets/css/shopcart-page.css">
+
+																																							        </script>`;
+            break;
+        case 'detailproductpage':
+            echo '
+
+            ';
+            break;
+        case 'signuppage':
+
+            break;
+        case 'shoppage':
+            echo '
+
+            ';
+            break;
+        case 'signinpage':
+
+            break;
+        case 'forgotpass':
+
+            break;
+        default:
+            echo '
+
+                ';
+    }
+} else {
+    echo '
+
+
+    ';
+}
+?>
 </head>
 
 <body>
