@@ -18,9 +18,9 @@
                 <label for="" class="label-form">Đơn giá</label>
                 <input type="text" name="don_gia" id="" class="form-control" required>
                 <p class="error-message"><?php echo isset($error['don_gia']) ? $error['don_gia'] : ''; ?></p>
-
             </div>
         </div>
+
         <div class="row">
             <div class="col">
                 <label for="" class="label-form">Giảm giá</label>
@@ -102,6 +102,10 @@ foreach ($cateList as $cateItem) {
             <div class="col">
                 <label for="" class="label-form">Số lượt xem</label>
                 <input type="number" readonly name="view" value="0" id="" class="form-control" required>
+            </div>
+            <div class="col">
+                <label for="" class="label-form">Số lượng</label>
+                <input type="number" name="so_luong" min="0" value="0" id="" class="form-control" required>
             </div>
         </div>
         <div class="row">

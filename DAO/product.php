@@ -1,8 +1,8 @@
 <?php
-function product_insert($ten_sanpham, $don_gia, $giam_gia, $hinhanh1, $hinhanh2, $hinhanh3, $hinhanh4, $ma_danhmuc, $dac_biet = 0, $so_luot_xem, $ngay_nhap, $mo_ta)
+function product_insert($ten_sanpham, $don_gia, $ton_kho, $giam_gia, $hinhanh1, $hinhanh2, $hinhanh3, $hinhanh4, $ma_danhmuc, $dac_biet = 0, $so_luot_xem, $ngay_nhap, $mo_ta)
 {
-    $sql = "INSERT INTO tbl_sanpham (tensp, don_gia, giam_gia, hinhanh1, hinhanh2, hinhanh3, hinhanh4, ma_danhmuc, dac_biet, so_luot_xem, ngay_nhap, mo_ta) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-    pdo_execute($sql, $ten_sanpham, $don_gia, $giam_gia, $hinhanh1, $hinhanh2, $hinhanh3, $hinhanh4, $ma_danhmuc, $dac_biet, $so_luot_xem, $ngay_nhap, $mo_ta);
+    $sql = "INSERT INTO tbl_sanpham (tensp, don_gia, ton_kho, giam_gia, hinhanh1, hinhanh2, hinhanh3, hinhanh4, ma_danhmuc, dac_biet, so_luot_xem, ngay_nhap, mo_ta) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    pdo_execute($sql, $ten_sanpham, $don_gia, $ton_kho, $giam_gia, $hinhanh1, $hinhanh2, $hinhanh3, $hinhanh4, $ma_danhmuc, $dac_biet, $so_luot_xem, $ngay_nhap, $mo_ta);
     return true;
 }
 
@@ -19,10 +19,17 @@ function product_delete($ma_sanpham)
 
 }
 
-function product_update($masanpham, $ten_sanpham, $don_gia, $giam_gia, $hinhanh1, $hinhanh2, $hinhanh3, $hinhanh4, $ma_danhmuc, $dac_biet = 0, $so_luot_xem, $ngay_nhap, $mo_ta)
+function product_update($masanpham, $ten_sanpham, $don_gia, $ton_kho, $giam_gia, $hinhanh1, $hinhanh2, $hinhanh3, $hinhanh4, $ma_danhmuc, $dac_biet = 0, $so_luot_xem, $ngay_nhap, $mo_ta)
 {
-    $sql = "UPDATE tbl_sanpham SET  tensp=?, don_gia=?, giam_gia=?, dac_biet=?, so_luot_xem=?, ngay_nhap=?, mo_ta=?, ma_danhmuc=?, hinhanh1=?, hinhanh2=?, hinhanh3=?, hinhanh4=? WHERE masanpham=?";
-    pdo_execute($sql, $ten_sanpham, $don_gia, $giam_gia, $dac_biet, $so_luot_xem, $ngay_nhap, $mo_ta, $ma_danhmuc, $hinhanh1, $hinhanh2, $hinhanh3, $hinhanh4, $masanpham);
+    $sql = "UPDATE tbl_sanpham SET  tensp=?, don_gia=?, ton_kho = ?, giam_gia=?, dac_biet=?, so_luot_xem=?, ngay_nhap=?, mo_ta=?, ma_danhmuc=?, hinhanh1=?, hinhanh2=?, hinhanh3=?, hinhanh4=? WHERE masanpham=?";
+    pdo_execute($sql, $ten_sanpham, $don_gia, $ton_kho, $giam_gia, $dac_biet, $so_luot_xem, $ngay_nhap, $mo_ta, $ma_danhmuc, $hinhanh1, $hinhanh2, $hinhanh3, $hinhanh4, $masanpham);
+    return true;
+}
+
+function product_update_quantity($masanpham, $ton_kho)
+{
+    $sql = "UPDATE tbl_sanpham SET  ton_kho = ? WHERE masanpham=?";
+    pdo_execute($sql, $ton_kho, $masanpham);
     return true;
 }
 

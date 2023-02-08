@@ -121,6 +121,11 @@ foreach ($cateList as $cateItem) {
                 <input type="number" readonly name="view" value="<?=$product['so_luot_xem']?>" id=""
                     class="form-control" required>
             </div>
+            <div class="col">
+                <label for="" class="label-form">Số lượng</label>
+                <input type="number" min="0" name="so_luong" value="<?=$product['ton_kho']?>" id="" class="form-control"
+                    required>
+            </div>
         </div>
         <div class="row">
             <div class="col">

@@ -51,6 +51,8 @@ if (isset($_SESSION['iduser']) && $_SESSION['iduser'] > 0) {
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 <div class="topbar__profile navbar-nav me-5">
+
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">

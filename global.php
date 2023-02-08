@@ -213,31 +213,23 @@ function validateUploadImage($fileName)
 
 }
 
-function getPagination()
+// include "./site/model/connectdb.php";
+
+function createDataWithPagination($conn, $sql, $_limit)
 {
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-
-// PHẦN XỬ LÝ PHP
-    // B1: KET NOI CSDL
-    $conn = new PDO("mysql:host=$servername;dbname=pagin_example", $username, $password); // replace here
-    // BƯỚC 2: TÌM TỔNG SỐ RECORDS
-    $stmt = $conn->prepare("SELECT * FROM news"); // replace here
+// BƯỚC 2: TÌM TỔNG SỐ RECORDS
+    $stmt = $conn->prepare($sql);
     $stmt->execute();
 
 // set the resulting array to associative
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
     $finalresult = $stmt->fetchAll();
-
     $total_records = count($finalresult);
 
 // BƯỚC 3: TÌM LIMIT VÀ CURRENT_PAGE
     $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-
-    $limit = 10; // Replace here
+    $limit = $_limit;
 
 // BƯỚC 4: TÍNH TOÁN TOTAL_PAGE VÀ START
     // tổng số trang
@@ -253,11 +245,73 @@ function getPagination()
 // Tìm Start
     $start = ($current_page - 1) * $limit;
 
-// BƯỚC 5: TRUY VẤN LẤY DANH SÁCH TIN TỨC
-    // Có limit và start rồi thì truy vấn CSDL lấy danh sách tin tức
+    if ($start < 0) {
+        $start = 0;
+    }
 
-    $stmt2 = $conn->prepare("SELECT * FROM news LIMIT $start, $limit");
-    $stmt2->execute();
-    $result2 = $stmt2->fetchAll();
+// BƯỚC 5: TRUY VẤN LẤY DANH SÁCH SẢN PHẨM
+    // Có limit và start rồi thì truy vấn CSDL lấy danh sách SẢN PHẨM
+    $stmt = $conn->prepare("$sql LIMIT $start, $limit");
+    $stmt->execute();
+    $datalist = $stmt->fetchAll();
 
+    $pagination = ['datalist' => $datalist, 'totalpage' => $total_page, 'start' => $start, 'current_page' => $current_page, 'total_records' => $total_records];
+    return $pagination;
+}
+
+function showStatus($num)
+{
+    $trangthai = '';
+    $statusMess = '';
+
+    switch ($num) {
+        case 1:
+            $trangthai = 'Chờ xác nhận';
+            $statusMess = 'Đơn hàng đã được đặt, Đang chờ xác nhận!';
+            break;
+        case 2:
+            $trangthai = 'Đã xác nhận';
+            $statusMess = 'Đơn hàng đã được xác nhận, Đang chờ giao cho khâu vận chuyển!';
+            break;
+        case 3:
+            $trangthai = 'Đang giao hàng';
+            $statusMess = 'Đơn hàng đang được vận chuyển đến cho bạn!';
+            break;
+        case 4:
+            $trangthai = 'Giao hàng thành công';
+            $statusMess = 'Đơn hàng đã được giao thành công';
+            break;
+        case 5:
+            $trangthai = 'Giao hàng thất bại';
+            $statusMess = 'Đơn hàng đã giao hàng thất bại! Do thời tiết hoặc lỗi do hàng tồn';
+            break;
+        case 6:
+            $trangthai = 'Đơn hàng đã bị hủy';
+            $statusMess = 'Đơn hàng đã hủy!';
+            break;
+        default:
+    }
+    return [$trangthai, $statusMess];
+}
+
+function updateorderstatus($iddh, $trangthai)
+{
+    $sql = "update tbl_order set trangthai = ? where id = ?";
+    $mess = pdo_execute($sql, $trangthai, $iddh);
+    echo $mess;
+    return true;
+}
+
+function deleteorderdetailbyid($iddh)
+{
+    $sql = "delete from tbl_cart where iddonhang = $iddh;";
+    pdo_execute($sql);
+    return true;
+}
+
+function deleteorderbyid($iddh)
+{
+    $sql = "delete from tbl_order where id = $iddh;";
+    pdo_execute($sql);
+    return true;
 }

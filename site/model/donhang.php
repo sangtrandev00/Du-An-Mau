@@ -49,7 +49,7 @@ function getorderinfo($iddh)
     $stmt = $conn->prepare("SELECT * FROM tbl_order WHERE id = " . $iddh);
     $stmt->execute();
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    $kq = $stmt->fetchAll();
+    $kq = $stmt->fetch();
     return $kq;
 }
 
@@ -85,7 +85,7 @@ function getshowcartbyiduser($iduser)
 function getShowCartGroupbyOrder($userId)
 {
     $conn = connectdb();
-    $stmt = $conn->prepare("SELECT tbl_order.id, madonhang, iddonhang,tongdonhang, pttt,sum(soluong) as soluong, timeorder,iduser FROM tbl_cart INNER JOIN tbl_order on tbl_cart.iddonhang = tbl_order.id group by iddonhang HAVING iduser = '$userId'");
+    $stmt = $conn->prepare("SELECT tbl_order.id, madonhang, iddonhang,tongdonhang, pttt,sum(soluong) as soluong, timeorder,iduser, trangthai FROM tbl_cart INNER JOIN tbl_order on tbl_cart.iddonhang = tbl_order.id group by iddonhang HAVING iduser = '$userId'");
     $stmt->execute();
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $kq = $stmt->fetchAll();

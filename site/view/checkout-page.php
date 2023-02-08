@@ -1,6 +1,24 @@
 <?php
+
+// echo $GLOBALS['changed_cart'];
+
 if (isset($_SESSION['giohang'])) {
-    ?>
+    $cartList = $_SESSION['giohang'];
+    // var_dump($cartList);
+    $flag = 0;
+    foreach ($cartList as $cartItem) {
+        $product = product_select_by_id($cartItem[0]);
+        if ($cartItem[4] > $product['ton_kho']) {
+            $flag = 1;
+            break;
+        }
+    }
+
+    if ($flag == 1) {
+        echo '<div class="alert alert-danger text-center p-3">Số lượng sản phẩm trong giỏ hàng đã thay đổi, do lượng sản phẩm tồn kho không đủ. Vui lòng <a href="index.php?act=addtocart" class="btn btn-warning">tải lại</a> trang giỏ hàng</div>';
+    } else {
+
+        ?>
 
 <main class="container p-5">
     <div class="text-center">
@@ -16,14 +34,23 @@ if (isset($_SESSION['giohang'])) {
             <ul class="list-group mb-3">
                 <?php
 
-    $cartList = $_SESSION['giohang'];
-    $sum = 0;
-    foreach ($cartList as $cartItem) {
-        # code...
-        $totalItem = $cartItem[3] * $cartItem[4];
-        $sum += $totalItem;
-        $priceFormatted = number_format($totalItem);
-        echo '
+        // Kiểm tra nếu có đủ số lượng trong kho trước
+
+        $sum = 0;
+
+        foreach ($cartList as $cartItem) {
+            # code...
+            $product = product_select_by_id($cartItem[0]);
+
+            // Kiểm tra hàng tồn kho. Nếu số lượng đặt > hàng tồn. Gán số lượng = số lượng còn lại trong tồn kho.
+
+            // echo $cartItem[0];
+
+            $totalItem = $cartItem[3] * $cartItem[4];
+
+            $sum += $totalItem;
+            $priceFormatted = number_format($totalItem);
+            echo '
                             <li class="list-group-item d-flex justify-content-between lh-sm">
                             <div>
                                 <h6 class="my-0">' . $cartItem[1] . ' x ' . $cartItem[4] . '</h6>
@@ -32,9 +59,9 @@ if (isset($_SESSION['giohang'])) {
                             <span class="text-muted">' . $priceFormatted . ' VND</span>
                         </li>
                             ';
-    }
-}
-?>
+        }
+
+        ?>
 
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-success">
@@ -211,3 +238,8 @@ if (isset($_SESSION['giohang'])) {
         </div>
     </div>
 </main>
+
+<?php
+}
+}
+?>

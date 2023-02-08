@@ -40,6 +40,19 @@ if (isset($_SESSION['iduser'])) {
                 }
                 include "./view/product/listproduct-page.php";
                 break;
+
+            case 'deleteproducts':
+                if (isset($_POST['idCheckedList'])) {
+                    $idCheckedList = explode(',', $_POST['idCheckedList']);
+                    // var_dump($idCheckedList);
+                    $is_deleted = product_delete($idCheckedList);
+                    if ($is_deleted) {
+                        echo '<div class="alert alert-danger">Xóa sản phẩm thành công</div>';
+                    }
+                    include "./view/product/listproduct-page.php";
+                }
+                break;
+
             case 'editproduct':
                 $error = array();
                 if (isset($_POST['editproductbtn']) && $_POST['editproductbtn']) {
@@ -49,6 +62,7 @@ if (isset($_SESSION['iduser'])) {
                     $giam_gia = $_POST['giam_gia'];
                     $don_gia = $_POST['don_gia'];
                     $view = $_POST['view'];
+                    $so_luong = $_POST['so_luong'];
                     $dac_biet = isset($_POST['hangdacbiet']) ? $_POST['hangdacbiet'] : 0;
                     date_default_timezone_set('Asia/Ho_Chi_Minh');
                     $date = date('Y-m-d H:i:s');
@@ -95,7 +109,7 @@ if (isset($_SESSION['iduser'])) {
                     }
 
                     if (!$error) {
-                        $is_updated = product_update($idproduct, $tensp, $don_gia, $giam_gia, $target_file1, $target_file2, $target_file3, $target_file4, $ma_danhmuc, $dac_biet, $view, $date, $mo_ta);
+                        $is_updated = product_update($idproduct, $tensp, $don_gia, $so_luong, $giam_gia, $target_file1, $target_file2, $target_file3, $target_file4, $ma_danhmuc, $dac_biet, $view, $date, $mo_ta);
                         if ($is_updated) {
                             echo '<div class="p-3 alert alert-success">Chúc mừng bạn đã cập nhật sản phẩm thành công</div>';
                         }
@@ -117,6 +131,7 @@ if (isset($_SESSION['iduser'])) {
                     // $oldprice = $_POST['oldprice'];
                     $giam_gia = $_POST['giam_gia'];
                     $don_gia = $_POST['don_gia'];
+                    $so_luong = $_POST['so_luong'];
                     $view = $_POST['view'];
                     $dac_biet = 0;
                     date_default_timezone_set('Asia/Ho_Chi_Minh');
@@ -162,7 +177,7 @@ if (isset($_SESSION['iduser'])) {
                     }
 
                     if (!$error) {
-                        $is_inserted = product_insert($tensp, $don_gia, $giam_gia, $target_file1, $target_file2, $target_file3, $target_file4, $ma_danhmuc, $dac_biet, $view, $date, $mo_ta);
+                        $is_inserted = product_insert($tensp, $don_gia, $so_luong, $giam_gia, $target_file1, $target_file2, $target_file3, $target_file4, $ma_danhmuc, $dac_biet, $view, $date, $mo_ta);
                         if ($is_inserted) {
                             echo '<div class="p-3 alert alert-success">Chúc mừng bạn đã thêm mời dùng mới thành công</div>';
                         }
@@ -428,6 +443,8 @@ if (isset($_SESSION['iduser'])) {
                 if (isset($_GET['iddh'])) {
                     $iddh = $_GET['iddh'];
                     $cart_list = getshowcart($iddh);
+                    $orderInfo = getorderinfo($iddh);
+                    // var_dump($orderInfo);
                     include "./view/order/orderdetail-page.php";
                 }
 
@@ -442,6 +459,63 @@ if (isset($_SESSION['iduser'])) {
 
                 break;
 
+            // case 'orderconfirm':
+            //     if (isset($_GET['id'])) {
+            //         $id = $_GET['id'];
+            //         echo $id;
+            //         $is_updated = updateorderbyid($_GET['id']);
+
+            //         if ($is_updated) {
+            //             echo 'update successfully!';
+            //         }
+            //         header('location: index.php?act=orderlist');
+            //     }
+            //     echo 'Hello world';
+            //     break;
+            case 'updateorder':
+                if (isset($_POST['updateorderbtn']) && $_POST['updateorderbtn']) {
+
+                    if (isset($_GET['iddh']) && $_GET['iddh'] > 0) {
+
+                        $iddh = $_GET['iddh'];
+                        $status = $_POST['status'];
+                        echo $status;
+
+                        // echo $status;
+
+                        $is_updated = updateorderstatus($iddh, $status);
+                        if ($is_updated) {
+                            echo '
+                                <script>
+                                    const notifyModelBtn = document.querySelector("#notifyModelBtn");
+                                    console.log(notifyModelBtn);
+                                </script>
+                            ';
+                        } else {
+                        }
+                        // include "view/order/userorderdetail-page.php";
+                        header('location: ./index.php?act=orderdetail&iddh=' . $iddh . '&status=updated');
+                    }
+
+                }
+                break;
+
+            case 'deleteorder':
+                if (isset($_GET['iddh'])) {
+                    $iddh = $_GET['iddh'];
+                    $cart_list = getshowcart($iddh);
+                    $orderInfo = getorderinfo($iddh);
+                    deleteorderdetailbyid($iddh);
+                    $is_deleted = deleteorderbyid($iddh);
+
+                    if ($is_deleted) {
+                        echo '<div class="alert alert-danger">Bạn đã xóa đơn hàng  đơn hàng ' . $iddh . ' thành công!</div>';
+                    }
+                    include "view/order/orderlist-page.php";
+                    // header('location: index.php?act=orderdetail&iddh=' . $iddh);
+                }
+
+                break;
             case 'logout':
                 unset($_SESSION['role']);
                 unset($_SESSION['username']);
@@ -449,32 +523,7 @@ if (isset($_SESSION['iduser'])) {
                 header('location: loginpage.php');
 
                 break;
-            case 'orderconfirm':
-                if (isset($_GET['id'])) {
-                    $id = $_GET['id'];
-                    echo $id;
-                    $is_updated = updateorderbyid($_GET['id']);
 
-                    if ($is_updated) {
-                        echo 'update successfully!';
-                    }
-                    header('location: index.php?act=orderlist');
-                }
-                echo 'Hello world';
-                break;
-            case 'orderdelete':
-                if (isset($_GET['id'])) {
-                    $id = $_GET['id'];
-                    $is_deleted = deleteorderbyid($_GET['id']);
-
-                    if ($is_deleted) {
-                        echo ' delete successfully!';
-                    }
-
-                    header('location: index.php?act=orderlist');
-                }
-
-                break;
             default:
                 if (isset($_SESSION['iduser'])) {
                     include "./view/pages/homepage.php";

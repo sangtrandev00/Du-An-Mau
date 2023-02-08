@@ -93,3 +93,9 @@ function comment_select_groupby_product()
     return pdo_query($sql);
 
 }
+
+function count_comment_has_approved($ma_sanpham)
+{
+    $sql = "select * from tbl_binhluan where ma_sanpham = $ma_sanpham and duyet = 1";
+    return count(pdo_query($sql));
+}

@@ -28,6 +28,16 @@ function getshowcart($iddh)
     return $kq;
 }
 
+function getorderinfo($iddh)
+{
+    $conn = connectdb();
+    $stmt = $conn->prepare("SELECT * FROM tbl_order WHERE id = " . $iddh);
+    $stmt->execute();
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $stmt->fetch();
+    return $kq;
+}
+
 function getshowcartbyiduser($iduser)
 {
     $conn = connectdb();
@@ -38,15 +48,9 @@ function getshowcartbyiduser($iduser)
     return $kq;
 }
 
-function updateorderbyid($iddh)
+function updateorderbyid($iddh, $trangthai)
 {
     $sql = "update tbl_order set trangthai = 'confirmed' where id = $iddh;";
-    pdo_execute($sql);
-    return true;
-}
-function deleteorderbyid($iddh)
-{
-    $sql = "delete from tbl_order where id = $iddh;";
     pdo_execute($sql);
     return true;
 }

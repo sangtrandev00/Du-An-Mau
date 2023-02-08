@@ -45,8 +45,8 @@
                     </button>
                     <div class="collapse show" id="home-collapse">
                         <ul class=" btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="link-dark  rounded">Tổng quan</a></li>
-                            <li><a href="#" class="link-dark  rounded">Cập nhật</a></li>
+                            <li><a href="./index.php" class="link-dark  rounded">Tổng quan</a></li>
+                            <li><a href="./index.php?act=news" class="link-dark  rounded">Cập nhật tin tức</a></li>
                             <li><a href="./index.php?act=reportlist" class="link-dark  rounded">Thống kê</a></li>
                         </ul>
                     </div>
@@ -77,6 +77,7 @@
                             <li><a href="index.php?act=commentlist" class="link-dark  rounded">Bình luận</a></li>
                             <!-- <li><a href="index.php?act=userlist" class="link-dark  rounded">Userlist</a></li> -->
                             <li><a href="index.php?act=orderlist" class="link-dark  rounded">Đơn hàng</a></li>
+                            <li><a href="index.php?act=discountlist" class="link-dark  rounded">Mã giảm giá</a></li>
                             <!-- <li><a href="#" class="link-dark  rounded">Monthly</a></li>
                         <li><a href="#" class="link-dark  rounded">Annually</a></li> -->
                         </ul>
@@ -95,18 +96,47 @@ if (isset($_SESSION) && $_SESSION['iduser']) {
                 <li class="mb-1">
                     <button class="btn btn-toggle align-items-center rounded collapsed " data-bs-toggle="collapse"
                         data-bs-target="#authorize-collapse" aria-expanded="false">
-                        Quản lý khách hàng
+                        Quản lý người dùng
                     </button>
                     <div class="collapse" id="authorize-collapse">
                         <ul class=" btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             <li><a href="index.php?act=userlist" class="link-dark  rounded">Quản trị viên</a></li>
                             <li><a href="index.php?act=customerlist" class="link-dark  rounded">Khách hàng</a></li>
+                            <li><a href="index.php?act=adduser" class="link-dark  rounded">Thêm người dùng</a></li>
                             <!-- <li><a href="index.php?act=productlist" class="link-dark  rounded">Products</a></li>
                             <li><a href="index.php?act=commentlist" class="link-dark  rounded">Comments</a></li>
                             <li><a href="index.php?act=userlist" class="link-dark  rounded">Userlist</a></li>
                             <li><a href="index.php?act=orderlist" class="link-dark  rounded">Orders</a></li> -->
                             <!-- <li><a href="#" class="link-dark  rounded">Monthly</a></li>
                         <li><a href="#" class="link-dark  rounded">Annually</a></li> -->
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded collapsed " data-bs-toggle="collapse"
+                        data-bs-target="#blog-collapse" aria-expanded="false">
+                        Quản lý bài viết
+                    </button>
+
+                    <div class="collapse" id="blog-collapse">
+                        <ul class=" btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="index.php?act=bloglist" class="link-dark  rounded">Tất cả bài viết</a></li>
+                            <li><a href="index.php?act=addblog" class="link-dark  rounded">Bài viết mới</a></li>
+                            <!-- <li><a href="#" class="link-dark  rounded">Annually</a></li> -->
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded collapsed " data-bs-toggle="collapse"
+                        data-bs-target="#request-collapse" aria-expanded="false">
+                        Yêu cầu khách hàng
+                    </button>
+
+                    <div class="collapse" id="request-collapse">
+                        <ul class=" btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="index.php?act=bloglist" class="link-dark  rounded">Các yêu cầu</a></li>
+                            <!-- <li><a href="index.php?act=addblog" class="link-dark  rounded">Bài viết mới</a></li> -->
+                            <!-- <li><a href="#" class="link-dark  rounded">Annually</a></li> -->
                         </ul>
                     </div>
                 </li>

@@ -7,6 +7,10 @@ if (!isset($_SESSION['giohang'])) {
     $_SESSION['giohang'] = [];
 }
 
+if (!isset($GLOBALS['changed_cart'])) {
+    $GLOBALS['changed_cart'] = false;
+}
+
 include "../global.php";
 include "../DAO/category.php";
 include "../DAO/product.php";
@@ -29,7 +33,7 @@ if (isset($_GET['act'])) {
             break;
 
         case 'shoppage':
-
+            // header('location: view/shoppage.php');
             include "./view/shoppage.php";
             break;
         case 'shopcartpage':
@@ -37,22 +41,46 @@ if (isset($_GET['act'])) {
             include "./view/shopcart-page.php";
             break;
         case 'updatecart':
+
             if (isset($_POST['updatecartbtn']) && $_POST['updatecartbtn']) {
+
+                // echo $GLOBALS['changed_cart'];
+                // echo $_POST['changedcart'];
+
+                $GLOBALS['changed_cart'] = $_POST['changedcart'];
                 $qtylist = $_POST['qtyhidden'];
+
                 $i = 0;
+                $flag = 0;
+
                 foreach ($_SESSION["giohang"] as $rowitem) {
 
                     $_SESSION['giohang'][$i][4] = $qtylist[$i];
+                    $product = product_select_by_id($rowitem[0]);
+                    if ($_SESSION['giohang'][$i][4] > $product['ton_kho']) {
+                        // UPDATE số lượng trên session luôn, khi đối chiếu với tồn kho.
+                        $_SESSION['giohang'][$i][4] = $product['ton_kho'];
+                        $flag = 1;
+                        break;
+                    }
 
+                    // var_dump($product);
                     $i++;
                 }
-                echo '<div class="alert alert-success">Cập nhật giỏ hàng thành công!</div>';
-                // echo '<div class="update-cart-success d-none" style="">HELLO</div>';
 
+                if ($flag == 1) {
+                    echo '<div class="alert alert-danger text-center p-3">Số lượng sản phẩm trong giỏ hàng đã thay đổi, do lượng sản phẩm tồn kho không đủ. Vui lòng <a href="index.php?act=addtocart" class="btn btn-warning">tải lại</a> giỏ hàng</div>';
+                } else {
+                    if (!$_POST['changedcart']) {
+                        echo '<div class="alert alert-success">Cập nhật giỏ hàng thành công!</div>';
+                    }
+                    include "./view/shopcart-page.php";
+                }
+                // echo '<div class="update-cart-success d-none" style="">HELLO</div>';
             } else {
                 "HELLO world";
             }
-            include "./view/shopcart-page.php";
+
             break;
         case 'deletecart':
             if (isset($_SESSION['giohang']) && count($_SESSION['giohang']) > 0) {
@@ -75,7 +103,16 @@ if (isset($_GET['act'])) {
             break;
         case 'checkoutpage':
 
-            include "./view/checkout-page.php";
+            if (isset($_POST['changecartcheckoutbtn']) && $_POST['changecartcheckoutbtn']) {
+
+                // $GLOBALS['changed_cart'] = $_POST['changecartcheckout'];
+                // if ($GLOBALS['changed_cart']) {
+                // echo '<div class="alert alert-danger text-center p-3">Số lượng sản phẩm trong giỏ hàng đã thay đổi, do lượng sản phẩm tồn kho không đủ. Vui lòng <a href="index.php?act=addtocart" class="btn btn-warning">tải lại</a> giỏ hàng</div>';
+                // } else {
+                include "./view/checkout-page.php";
+                // }
+            }
+
             break;
         case 'checkout':
 
@@ -117,6 +154,17 @@ if (isset($_GET['act'])) {
                 }
 
                 if (!$error) {
+                    // Trừ số lượng trong hàng tồn kho đi.
+                    $cartList = $_SESSION['giohang'];
+                    foreach ($cartList as $cartItem) {
+                        # code...
+                        $product = product_select_by_id($cartItem[0]);
+
+                        $productQtyRemain = $product['ton_kho'] - $cartItem[4];
+                        echo "So luong con lai trong kho: " . $productQtyRemain;
+                        product_update_quantity($cartItem[0], $productQtyRemain);
+                    }
+
                     // 3. tạo đơn hàng và trả về một id đơn hàng
                     $iddh = taodonhang($madonhang, $tongdonhang, $pttt, $hoten, $diachi, $email, $sodienthoai, $ghichu, $iduser, $time_order);
                     $_SESSION['iddh'] = $iddh;
@@ -142,6 +190,7 @@ if (isset($_GET['act'])) {
         //     break;
 
         case 'addtocart':
+            var_dump($_SESSION['giohang']);
             if (isset($_SESSION['iduser'])) {
 
                 if (isset($_POST['addtocartbtn']) && $_POST['addtocartbtn']) {
@@ -158,6 +207,13 @@ if (isset($_GET['act'])) {
 
                     if (isset($_POST['cart_quantity']) && ($_POST['cart_quantity'] > 0)) {
                         $sl = $_POST['cart_quantity'];
+
+                        $product = product_select_by_id($id);
+                        if ($sl > $product['ton_kho']) {
+                            $sl = $product['ton_kho'];
+                            $GLOBALS['changed_cart'] = true;
+                        }
+
                     } else {
                         $sl = 1;
                     }
@@ -179,6 +235,7 @@ if (isset($_GET['act'])) {
                         if ($itemsp[0] === $id) {
                             $slnew = $sl + $itemsp[4];
                             // echo "So LUONG MOI: " . $slnew;
+
                             $_SESSION['giohang'][$i][4] = $slnew;
                             $flag = 1;
                             break;
@@ -536,11 +593,13 @@ if (isset($_GET['act'])) {
                         echo '<div class="mt-5 mb-3 text-muted alert alert-danger">Cập nhật mật khẩu thất bại</div>';
                         echo '
                         <script>
+
                         if(collapseTwoElement) {
                             const collapseTwoElement = document.getElementById("collapseTwo");
                             collapseTwoElement.classList.add("show");
                             collapseTwoElement.classList.remove("collapse");
                         }
+
                         </script>
                         ';
                     }
@@ -556,9 +615,58 @@ if (isset($_GET['act'])) {
         case 'historyorderdetailpage':
             if (isset($_GET['id'])) {
                 $cartList = getshowcart($_GET['id']);
+                $orderInfo = getorderinfo($_GET['id']);
+                // var_dump($orderInfo);
                 //var_dump($cartList);
             }
             include "./view/account/historyorder-detail-page.php";
+            break;
+
+        case 'updateorder':
+
+            if (isset($_POST['updateorderbtn']) && $_POST['updateorderbtn']) {
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    $iddh = $_GET['id'];
+
+                    $status = $_POST['updatestatus'];
+                    $is_updated = updateorderstatus($iddh, $status);
+
+                    if ($is_updated) {
+                        // echo '
+                        //     <script>
+                        //         const notifyModelBtn = document.querySelector("#notifyModelBtn");
+                        //         console.log(notifyModelBtn);
+                        //     </script>
+                        // ';
+                    } else {
+
+                    }
+                    header('location: ./index.php?act=historyorderdetailpage&id=' . $iddh . '&status=updated');
+                }
+            }
+        case 'destroyorder':
+
+            if (isset($_POST['destroyorderbtn']) && $_POST['destroyorderbtn']) {
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    $iddh = $_GET['id'];
+
+                    $status = $_POST['destroystatus'];
+                    $is_updated = updateorderstatus($iddh, $status);
+
+                    if ($is_updated) {
+                        // echo '
+                        //     <script>
+                        //         const notifyModelBtn = document.querySelector("#notifyModelBtn");
+                        //         console.log(notifyModelBtn);
+                        //     </script>
+                        // ';
+                    } else {
+
+                    }
+                    header('location: ./index.php?act=historyorderdetailpage&id=' . $iddh . '&status=destory');
+                }
+            }
+
             break;
         case 'logout':
             unset($_SESSION['role']);

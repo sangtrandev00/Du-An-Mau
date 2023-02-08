@@ -1,4 +1,5 @@
 <?php
+// var_dump($_SESSION['giohang']);
 
 if (isset($_GET['id'])) {
     $idproduct = $_GET['id'];
@@ -55,22 +56,41 @@ if (isset($_GET['id'])) {
                         </p>
                         <p class="new-price text-bold mb-1"><?php echo $newPriceFormat ?> VND</p>
                         <p class="text-secondary mb-1">(Additional tax may apply on checkout)</p>
+                    </div>
 
+                    <div class="quantity-remain">
+                        <label for="" class="quantity-remain-text text-bold">Tồn kho:</label>
+                        <span><?=$product['ton_kho']?></span>
                     </div>
 
                     <div class="buttons d-flex my-5">
+
+
+                        <?php if ($product['ton_kho'] > 0) {
+    ?>
                         <div class="block">
                             <a href="#" class="shadow btn custom-btn ">Wishlist</a>
                         </div>
                         <div class="block">
                             <input type="submit" name="addtocartbtn" class="shadow btn custom-btn"
                                 value="Add to cart" />
-                        </div>
 
-                        <div class="block quantity">
-                            <input type="number" class="form-control" id="cart_quantity" value="1" min="0" max="5"
-                                placeholder="Enter email" name="cart_quantity">
                         </div>
+                        <div class="block quantity">
+                            <input type="number" class="form-control" id="cart_quantity" value="1" min="0" max="10000"
+                                placeholder="Enter email" name="cart_quantity">
+                            <input type="hidden" name="cart_quantity_hidden" value="">
+                        </div>
+                        <?php
+} else {
+    ?>
+                        <div class="block alert alert-warning">Hết hàng</div>
+
+                        <?php
+}
+?>
+
+
                     </div>
 
                     <input type="hidden" name="id" value="<?php echo $idproduct ?>">
@@ -193,19 +213,7 @@ renderCard($similarProductList);
 </div>
 
 </div>
-<!--s
-<div class="footer mt-5">
-    <div class="container1">
-        <footer class="py-3 my-4">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-            </ul>
-            <p class="text-center text-muted">© 2022 Company, Inc</p>
-        </footer>
-    </div>
 
-</div> -->
+<script>
+
+</script>

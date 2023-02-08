@@ -8,6 +8,7 @@
                 <th scope="col"></th>
                 <th scope="col">Sản phẩm</th>
                 <th scope="col">Số bình luận</th>
+                <th scope="col">Đã duyệt</th>
                 <th scope="col">Mới nhất</th>
                 <th scope="col" colspan="2">Hành động</th>
             </tr>
@@ -27,6 +28,7 @@ foreach ($commentList as $comment) {
     </td>
     <td scope="row">' . $comment['tensp'] . '</td>
     <td> ' . $numberOfComment . '</td>
+    <td> ' . count_comment_has_approved($comment['ma_sanpham']) . '</td>
     <td>' . $comment['ngay_binhluan'] . '</td>
     <td><a href="./index.php?act=commentdetail&id=' . $comment['ma_sanpham'] . '" class="btn btn-primary px-3">Chi tiết</a></td>
 </tr>
