@@ -24,8 +24,8 @@ foreach ($cateList as $cateItem) {
     </td>
     <td scope="row">' . $cateItem['ma_danhmuc'] . '</td>
     <td>' . $cateItem['ten_danhmuc'] . '</td>
-    <td><a href="./index.php?act=editcate&id=' . $cateItem['ma_danhmuc'] . '" class="btn btn-primary">Sửa</a><a href="./index.php?act=deletecate&id=' . $cateItem['ma_danhmuc'] . '"
-            class="btn btn-danger mx-3">Xóa</a></td>
+    <td><a href="./index.php?act=editcate&id=' . $cateItem['ma_danhmuc'] . '" class="btn btn-primary">Sửa</a><a  href="./index.php?act=deletecate&id=' . $cateItem['ma_danhmuc'] . '"
+            class="btn btn-danger mx-3" onclick="confirm(`Bạn có chắc muốn xóa tên danh mục này!`);" >Xóa</a></td>
 </tr>
     ';
 }

@@ -1,6 +1,6 @@
 <?php
-echo $_SESSION['filterbyprice'];
-echo $_SESSION['filterbyname'];
+// echo $_SESSION['filterbyprice'];
+// echo $_SESSION['filterbyname'];
 // echo $_SESSION['filterbyprice'];
 
 ?>
@@ -141,7 +141,7 @@ foreach ($productList as $productItem) {
     </td>
     <td  scope="row">' . $productItem['masanpham'] . '</td>
     <td style="width: 25rem;">' . $productItem['tensp'] . '</td>
-    <td>' . $productItem['don_gia'] . '</td>
+    <td>' . $productItem['don_gia'] . ' VND</td>
     <td>' . $productItem['ton_kho'] . '</td>
     <td>' . $productItem['giam_gia'] . '%</td>
     <td>' . $productItem['so_luot_xem'] . '</td>
@@ -151,6 +151,7 @@ foreach ($productList as $productItem) {
 </tr>
     ';
 }
+
 ?>
                 <div class="pagination justify-content-lg-end pl-4 my-3">
                     <?php

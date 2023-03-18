@@ -1,9 +1,11 @@
-<?php
-//var_dump($_SESSION['iduser']);
-if (isset($_SESSION['iduser']) && $_SESSION['iduser'] > 0) {
+<?php if (isset($user['hinh_anh'])) {
+    $imgUrl = substr($user['hinh_anh'], 0, 4) == 'http' ? $user['hinh_anh'] : "../" . $user['hinh_anh'];
 
+} else {
+    $imgUrl = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80";
 }
 ?>
+
 
 <div class="content">
 
@@ -52,14 +54,12 @@ if (isset($_SESSION['iduser']) && $_SESSION['iduser'] > 0) {
                 </form>
                 <div class="topbar__profile navbar-nav me-5">
 
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
 
-
-                            <img style="width: 50px; height: 50px; border-radius: 50%;"
-                                src="<?php if (!isset($user['hinh_anh'])) {echo 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80';} else {echo $user['hinh_anh'];}?> " />
+                            <?php if (isset($_SESSION['username'])) {echo $_SESSION['username'];}?>
+                            <img style="width: 50px; height: 50px; border-radius: 50%;" src="<?php echo $imgUrl ?>" />
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">
                             <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>

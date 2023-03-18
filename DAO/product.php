@@ -1,4 +1,5 @@
 <?php
+
 function product_insert($ten_sanpham, $don_gia, $ton_kho, $giam_gia, $hinhanh1, $hinhanh2, $hinhanh3, $hinhanh4, $ma_danhmuc, $dac_biet = 0, $so_luot_xem, $ngay_nhap, $mo_ta)
 {
     $sql = "INSERT INTO tbl_sanpham (tensp, don_gia, ton_kho, giam_gia, hinhanh1, hinhanh2, hinhanh3, hinhanh4, ma_danhmuc, dac_biet, so_luot_xem, ngay_nhap, mo_ta) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";

@@ -2,10 +2,11 @@
 <div class="container-fluid">
     <!-- Page Heading -->
 
-    <a class="my-3 d-inline-block" href="./index.php?act=userlist">
+    <a class="my-3 d-inline-block btn btn-outline-primary" href="./index.php?act=userlist">
         << Trở lại trang user</a>
             <h3 class="h3 mb-4 text-gray-800 bg-success text-white p-3">Thêm user</h1>
-                <form id="adduserForm" action="index.php?act=adduser" method="post" enctype="multipart/form-data">
+                <form id="adduserForm" class="pb-3" action="index.php?act=adduser" method="post"
+                    enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="">Tên User: </label>
                         <input type="text" class="form-control" name="fullname" value="" required>
@@ -29,7 +30,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">kích hoạt: </label>
-                        <input type="number" class="form-control" min=0 max=1 name="kichhoat" value="" required>
+                        <input type="number" class="form-control" min=0 max=1 name="kichhoat" value="1" required>
                     </div>
                     <div class="form-group">
                         <label for="">Username: </label>
@@ -38,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Password: </label>
-                        <input type="text" class="form-control" name="password" value="" required>
+                        <input type="password" class="form-control" name="password" value="" required>
                         <p class="error-message"><?php echo isset($error['password']) ? $error['password'] : ''; ?></p>
 
                     </div>

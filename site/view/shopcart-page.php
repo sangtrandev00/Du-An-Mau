@@ -2,8 +2,11 @@
 
 // Phạm vi của biến global ntn ?
 if (isset($_SESSION['giohang']) && count($_SESSION['giohang']) > 0) {
+
     $numberOfCart = count($_SESSION['giohang']);
+
     // echo 'global: ' . $GLOBALS['changed_cart'];
+
     if (!$GLOBALS['changed_cart']) {
         ?>
 
@@ -62,7 +65,7 @@ if (isset($_SESSION['giohang']) && count($_SESSION['giohang']) > 0) {
                                                 </div>
                                                 <div class="col-md-3 col-lg-3 col-xl-3">
                                                     <h6 class="text-muted">' . $cartItem[5] . '</h6>
-                                                    <h6 class="text-black mb-0">' . $cartItem[1] . '</h6>
+                                                    <h6 class="text-black mb-0"> <a href="./index.php?act=detailproductpage&id=' . $cartItem[0] . '"> ' . $cartItem[1] . '</a></h6>
                                                     <h6 class="text-warning mb-0 text-underline price-item-wrap"> <i>Giá sp:</i> <span class="price-item">' . $priceFormatted . '</span> VND</h6>
                                                     <input type="hidden" name="" class="price-item-input" value="' . $cartItem[3] . '">
                                                 </div>
@@ -98,7 +101,7 @@ if (isset($_SESSION['giohang']) && count($_SESSION['giohang']) > 0) {
 
                                         <div class="pt-5">
                                             <div class="mb-0 d-flex justify-content-between align-items-center"><a
-                                                    href="#!" class="text-body"><i
+                                                    href="index.php?act=shoppage" class="text-body"><i
                                                         class="fas fa-long-arrow-alt-left me-2"></i>Back to
                                                     shop</a>
                                                 <input type="hidden" class="update-changed-cart" name="changedcart"

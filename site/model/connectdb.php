@@ -1,6 +1,7 @@
 <?php
 function connectdb()
 {
+
     $servername = "localhost";
     $username = "asm_myclass";
     $password = "trannhatsang10";

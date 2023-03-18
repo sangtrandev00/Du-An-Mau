@@ -1,3 +1,5 @@
+
+
 function logout(){
     console.log("Hello clicked");
     const continueLogout = document.getElementById("continueLogout");
@@ -18,3 +20,4 @@ function getParent(element, selector) {
       element = element.parentElement;
     }
 }
+

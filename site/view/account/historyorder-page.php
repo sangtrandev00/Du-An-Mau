@@ -4,9 +4,7 @@
             placeholder="Tìm kiếm lịch sử theo mã đơn hàng">
     </form>
     <thead class="text-dark bg-light p-3">
-
         <tr>
-
             <th scope="col">iddh</th>
             <th scope="col">Mã đơn hàng</th>
             <!-- <th scope="col">Hình ảnh</th>

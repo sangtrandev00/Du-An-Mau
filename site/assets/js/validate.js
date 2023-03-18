@@ -46,7 +46,7 @@ jQuery.validator.setDefaults({
     rules: {
         username: {
         required: true,
-        minlength: 10,
+        minlength: 5,
         maxlength: 30,
       },
       password: {
@@ -58,7 +58,7 @@ jQuery.validator.setDefaults({
     messages: {
         "username": {
             required: "Bắt buộc nhập username",
-            minlength: "Hãy nhập tối thiểu 10 ký tự",
+            minlength: "Hãy nhập tối thiểu 5 ký tự",
             maxLength: "Hãy nhập tối đa 30 ký tự",
         },
         "password": {

@@ -1,6 +1,6 @@
 <div class="p-3">
     <h3 class="p-3 bg-success text-white">Sửa danh mục sản phẩm</h3>
-    <form id="editcateForm" action="./index.php?act=updatecate" method="post">
+    <form id="editcateForm" action="<?php echo "./index.php?act=updatecate&id=" . $_GET['id'] ?>" method="post">
         <div class="mb-3">
             <label for="idproduct" class="form-label">Mã loại hàng</label>
             <input type="text" value="<?php if (isset($_GET['id'])) {echo $_GET['id'];}?>" readonly class="form-control"
@@ -22,3 +22,10 @@
 <?php
 
 ?>
+
+<script>
+// Reset form when click button resetbtn
+const resetForm = () => {
+
+}
+</script>

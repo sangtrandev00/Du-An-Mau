@@ -1,6 +1,7 @@
 <?php
 ob_start();
 session_start();
+
 include "../global.php";
 
 // var_dump($_SESSION);
@@ -13,6 +14,7 @@ include "../DAO/category.php";
 include "../DAO/product.php";
 include "../DAO/user.php";
 include "../DAO/comment.php";
+include "../DAO/report.php";
 include "./view/common/header.php";
 include "./view/common/sidebar.php";
 include "./view/common/topbar.php";
@@ -214,12 +216,14 @@ if (isset($_SESSION['iduser'])) {
                 include "./view/cate/editcate-page.php";
                 break;
             case 'updatecate':
+
                 $error = array();
+
                 if (isset($_POST['editcatebtn']) && $_POST['editcatebtn']) {
                     $madanhmuc = $_POST['madanhmuc'];
                     $tendanhmuc = $_POST['catename'];
-
-                    if (empty($catename)) {
+                    // echo $tendanhmuc;
+                    if (empty($tendanhmuc)) {
                         $error['catename'] = "Không để trống tên danh mục";
                     } else {
                         if (cate_exist_by_name($tendanhmuc)) {
@@ -341,6 +345,8 @@ if (isset($_SESSION['iduser'])) {
                     }
 
                     if (!$error) {
+                        // Encrypt password
+                        $password = md5($password);
                         $is_inserted = user_insert($username, $password, $name, $address, $phone, $kichhoat, $target_file, $email, $role);
 
                         if ($is_inserted) {
@@ -354,6 +360,7 @@ if (isset($_SESSION['iduser'])) {
             case 'edituser':
                 $error = array();
                 if (isset($_POST['edituserbtn']) && $_POST['edituserbtn']) {
+
                     $iduser = $_POST['iduser'];
                     $name = $_POST['fullname'];
                     $address = $_POST['address'];
@@ -404,18 +411,17 @@ if (isset($_SESSION['iduser'])) {
                     }
 
                     if (!$error) {
-                        $is_inserted = user_insert($username, $password, $name, $address, $phone, $kichhoat, $target_file, $email, $role);
+                        $password = md5($password);
 
-                        if ($is_inserted) {
-                            echo '<div class="p-3 bg-light">Chúc mừng bạn đã thêm mời dùng mới thành công</div>';
+                        // echo $role;
+                        $is_updated = user_update($iduser, $username, $password, $name, $address, $phone, $kichhoat, $target_file, $email, $role);
+
+                        if ($is_updated) {
+                            echo '<div class="p-3 alert alert-success">Chúc mừng bạn đã cập nhật người dùng thành công</div>';
                         }
+
                     }
 
-                    $is_updated = user_update($iduser, $username, $password, $name, $address, $phone, $kichhoat, $target_file, $email, $role);
-
-                    if ($is_updated) {
-                        echo '<div class="p-3 bg-success">Chúc mừng bạn đã cập nhật người dùng thành công</div>';
-                    }
                 }
 
                 include "./view/user/edituser-page.php";
@@ -426,7 +432,7 @@ if (isset($_SESSION['iduser'])) {
                     $id_deleted = user_delete($_GET['id']);
                     if ($id_deleted) {
 
-                        echo '<div class="p-3 bg-success text-white">Chúc mừng bạn đã xóa người dùng thành công</div>';
+                        echo '<div class="p-3 alert alert-success text-white">Chúc mừng bạn đã xóa người dùng thành công</div>';
 
                     }
                 }

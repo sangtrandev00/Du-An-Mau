@@ -12,6 +12,11 @@
 // var_dump();
 $countProducts = count(product_select_all());
 $countOrders = count(get_all_orders());
+$sum_all_sales = number_format(sum_all_sales()['sum_all_sales']);
+// var_dump($sum_all_sales);
+// echo count_all_orders();
+$count_all_orders = count_all_orders();
+$count_all_comments = count_all_comments();
 ?>
 
 <div class="container-fluid p-3">
@@ -140,10 +145,12 @@ $countOrders = count(get_all_orders());
                 <div class="card-body">
                     <div class="chart-area h-100">
                         <!-- <canvas id="myAreaChart"></canvas> -->
-                        <div>Tổng doanh số:</div>
+
+
+                        <div>Tổng doanh số: <?php echo $sum_all_sales ?> VND</div>
                         <div>Số lượng bài viết : 0</div>
-                        <div>Số lượng bình luận: 100</div>
-                        <div>Số lượng đơn hàng: 20</div>
+                        <div>Số lượng bình luận: <?php echo $count_all_comments ?></div>
+                        <div>Số lượng đơn hàng: <?php echo $count_all_orders ?></div>
                     </div>
                 </div>
             </div>

@@ -17,6 +17,12 @@
 $adminList = user_select(3);
 foreach ($adminList as $user) {
     $vaitro = '';
+
+    if (isset($user['hinh_anh'])) {
+        $imgUrl = substr($user['hinh_anh'], 0, 4) == 'http' ? $user['hinh_anh'] : "../" . $user['hinh_anh'];
+    } else {
+        $imgUrl = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80";
+    }
     switch ($user['vai_tro']) {
         case '1':
             # code...
@@ -39,19 +45,25 @@ foreach ($adminList as $user) {
             break;
     }
 
+    if (isset($user['hinh_anh'])) {
+        $imgUrl = substr($user['hinh_anh'], 0, 4) == 'http' ? $user['hinh_anh'] : "../" . $user['hinh_anh'];
+    } else {
+        $imgUrl = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80";
+    }
+
     echo '
     <tr class="">
-    <td>
-        <input type="checkbox" name="" id="">
-    </td>
-    <td scope="row">' . $user['id'] . '</td>
-    <td>' . $user['ho_ten'] . '</td>
-    <td>' . $user['email'] . '</td>
-    <td><img width=100 height=100 style="object-fit: cover;" src="' . $user['hinh_anh'] . '" /></td>
-    <td>' . $vaitro . '</td>
-    <td><a href="./index.php?act=edituser&id=' . $user['id'] . '" class="btn btn-primary">Sửa</a><a href="./index.php?act=deleteuser&id=' . $user['id'] . '"
-            class="btn btn-danger mx-3">Xóa</a></td>
-</tr>
+        <td>
+            <input type="checkbox" name="" id="">
+        </td>
+        <td scope="row">' . $user['id'] . '</td>
+        <td>' . $user['ho_ten'] . '</td>
+        <td>' . $user['email'] . '</td>
+        <td><img width=100 height=100 style="object-fit: cover;" src="' . $imgUrl . '" /></td>
+        <td>' . $vaitro . '</td>
+        <td><a href="./index.php?act=edituser&id=' . $user['id'] . '" class="btn btn-primary">Sửa</a><a href="./index.php?act=deleteuser&id=' . $user['id'] . '"
+                class="btn btn-danger mx-3">Xóa</a></td>
+    </tr>
     ';
 }
 ?>

@@ -60,6 +60,8 @@
 <body>
     <?php
 
+// Total order
+
 // PHẦN XỬ LÝ PHP
 // B1: KET NOI CSDL
 $conn = connectdb();
@@ -83,7 +85,8 @@ $total_records = $pagination['total_records'];
     <div class="p-2">
 
         <h3 class="title mt-5 bg-success p-3 text-white">Danh sách đơn hàng (Tổng số đơn hàng là:
-            <?php echo count($order_list) ?>)
+            <?php echo count_all_orders(); ?>
+            )
         </h3>
 
         <div class="filter my-3">

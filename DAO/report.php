@@ -29,3 +29,21 @@ function report_comments()
     return pdo_query($sql);
 
 }
+
+function sum_all_sales()
+{
+    $sql = 'SELECT sum(tongdonhang) as sum_all_sales from tbl_order';
+    return pdo_query_one($sql);
+}
+
+function count_all_orders()
+{
+    $sql = 'SELECT count(*) from tbl_order';
+    return pdo_query_value($sql);
+}
+
+function count_all_comments()
+{
+    $sql = 'SELECT count(*) from tbl_binhluan';
+    return pdo_query_value($sql);
+}

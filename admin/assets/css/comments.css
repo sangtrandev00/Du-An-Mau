@@ -1,0 +1,9 @@
+.table-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.comments-pagination {
+    display: flex;
+    justify-content: flex-end;
+}

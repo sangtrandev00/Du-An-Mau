@@ -33,6 +33,7 @@ function get_all_products($new, $sale, $view, $cateid = 0)
     }
     $conn = null;
 }
+
 function get_sale_products($numbers)
 {
     try {

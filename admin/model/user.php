@@ -14,6 +14,7 @@ function checkuser($username, $password)
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $kq = $stmt->fetchAll();
     // Chưa check user
+    // var_dump($kq);
     if (count($kq) > 0) {
         // echo "kq: " . var_dump($kq);
         return $kq[0]['vai_tro'];

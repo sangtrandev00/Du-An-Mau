@@ -21,7 +21,10 @@ if (isset($_POST['loginbtn']) && $_POST['loginbtn']) {
     }
 
     if (!$error) {
+        $password = md5($password);
+        // echo $password;
         $islogined = checkuser($username, $password);
+        // echo $islogined;
         if ($islogined === -1) {
             // $text_error = "username hoặc password không chính xác";
 
@@ -31,8 +34,8 @@ if (isset($_POST['loginbtn']) && $_POST['loginbtn']) {
             $kq = getuserinfo($username, $password);
             // var_dump($kq);
             $role = $kq[0]['vai_tro'];
-            // echo $role;
-            if ($role == 1 || $role == 2) {
+            // echo $role;t
+            if ($role == 1 || $role == 2 || $role == 3) {
                 // $_SESSION['role'] = $role;
                 // $_SESSION['username'] = $kq[0]['user'];
                 // $_SESSION['iduser'] = $kq[0]['id'];

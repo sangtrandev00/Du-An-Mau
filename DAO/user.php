@@ -1,16 +1,16 @@
 <?php
 
-function user_insert($tai_khoan, $mat_khau, $ho_ten, $diachi, $sodienthoai, $kich_hoat = 1, $hinh_anh = null, $email, $vai_tro = 1)
+function user_insert($tai_khoan, $mat_khau, $ho_ten, $diachi, $sodienthoai, $kich_hoat = 1, $hinh_anh = null, $email, $vai_tro)
 {
     $sql = "INSERT INTO tbl_nguoidung(tai_khoan, mat_khau, ho_ten, diachi, sodienthoai, email, hinh_anh, kich_hoat, vai_tro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     pdo_execute($sql, $tai_khoan, $mat_khau, $ho_ten, $diachi, $sodienthoai, $email, $hinh_anh, $kich_hoat, $vai_tro);
     return true;
 }
 
-function user_update($iduser, $tai_khoan, $mat_khau, $ho_ten, $diachi, $sodienthoai, $kich_hoat = 1, $hinh_anh, $email, $vai_tro = 1)
+function user_update($iduser, $tai_khoan, $mat_khau, $ho_ten, $diachi, $sodienthoai, $kich_hoat = 1, $hinh_anh, $email, $vai_tro)
 {
     $sql = "UPDATE tbl_nguoidung SET tai_khoan=?, mat_khau=?, ho_ten=?, diachi=?, sodienthoai=?, email=?,hinh_anh=?,kich_hoat=?,vai_tro=? WHERE id=?";
-    pdo_execute($sql, $tai_khoan, $mat_khau, $ho_ten, $diachi, $sodienthoai, $email, $hinh_anh, $kich_hoat == 1, $vai_tro == 1, $iduser);
+    pdo_execute($sql, $tai_khoan, $mat_khau, $ho_ten, $diachi, $sodienthoai, $email, $hinh_anh, $kich_hoat == 1, $vai_tro, $iduser);
     return true;
 }
 

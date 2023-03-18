@@ -36,7 +36,7 @@ if (isset($_GET['act'])) {
         case 'shopcartpage':
             echo `<script src="./assets/css/shopcart-page.css">
 
-																																							        </script>`;
+																																											        </script>`;
             break;
         case 'detailproductpage':
             echo '
@@ -56,6 +56,9 @@ if (isset($_GET['act'])) {
             break;
         case 'forgotpass':
 
+            break;
+        case 'commentlist':
+            echo '<link rel="stylesheet" href="./assets/css/comments.css">';
             break;
         default:
             echo '

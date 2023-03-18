@@ -161,7 +161,7 @@ if (isset($_GET['act'])) {
                         $product = product_select_by_id($cartItem[0]);
 
                         $productQtyRemain = $product['ton_kho'] - $cartItem[4];
-                        echo "So luong con lai trong kho: " . $productQtyRemain;
+                        // echo "So luong con lai trong kho: " . $productQtyRemain;
                         product_update_quantity($cartItem[0], $productQtyRemain);
                     }
 
@@ -190,7 +190,7 @@ if (isset($_GET['act'])) {
         //     break;
 
         case 'addtocart':
-            var_dump($_SESSION['giohang']);
+            // var_dump($_SESSION['giohang']);
             if (isset($_SESSION['iduser'])) {
 
                 if (isset($_POST['addtocartbtn']) && $_POST['addtocartbtn']) {
@@ -248,6 +248,7 @@ if (isset($_GET['act'])) {
                         $itemsp = array($id, $tensp, $img, $gia, $sl, $tendanhmuc);
                         // array_push($_SESSION['giohang'], $itemsp);
                         // $_SESSION['giohang'][] = $itemsp;
+
                         $_SESSION['giohang'][] = $itemsp;
 
                     }
@@ -306,7 +307,8 @@ if (isset($_GET['act'])) {
                 $phonenumber = $_POST['phonenumber'];
                 $email = $_POST['email'];
                 $username = $_POST['username'];
-                $password = $_POST['password'];
+                $password = md5($_POST['password']);
+
                 $reenterpass = $_POST['reenterpass'];
 
                 // Validate at server
@@ -341,7 +343,7 @@ if (isset($_GET['act'])) {
                 }
 
                 if (!$error) {
-                    $is_inserted = user_insert($username, $password, $fullname, $homeaddress, $phonenumber, 1, null, $email, 1);
+                    $is_inserted = user_insert($username, $password, $fullname, $homeaddress, $phonenumber, 1, null, $email, 3);
                     // if ($is_inserted) {
                     //     echo '<div class="register-account-success d-none" style="">HELLO</div>';
                     // }
@@ -362,6 +364,8 @@ if (isset($_GET['act'])) {
                 $password = $_POST['password'];
                 // Đối chiếu password
 
+                // Mã hóa password
+
                 if (empty($username)) {
                     $error['username'] = "Không để trống username";
                 }
@@ -370,14 +374,19 @@ if (isset($_GET['act'])) {
                     $error['password'] = "Không để trống password";
                 }
 
+                $password = md5($password);
+                // echo $password;
+
                 $islogined = checkuser($username, $password);
+
                 if ($islogined === -1) {
                     // $text_error = "username hoặc password không chính xác";
 
-                    echo '<div class="alert-warning alert"  style="">username hoặc password không chính xác</div>';
+                    echo '<div class="alert-warning alert" style="">username hoặc password không chính xác</div>';
                     // include "./view/login-page.php";
                 } else {
                     $kq = getuserinfo($username, $password);
+                    // echo $kq;
                     // var_dump($kq);
                     $role = $kq[0]['vai_tro'];
                     // echo $role;
